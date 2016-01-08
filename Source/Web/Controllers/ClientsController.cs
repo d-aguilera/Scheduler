@@ -6,10 +6,14 @@ namespace Scheduler.Web.Controllers
 {
     public class ClientsController : ControllerBase<Client>
     {
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        const string BindInclude = "Id,NetworkName,Description,Created,CreatedBy,LastUpdated,LastUpdatedBy";
+
         // POST: Clients/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public override ActionResult Create([Bind(Include = "Id,NetworkName,Description,Created,CreatedBy,LastUpdated,LastUpdatedBy")] Client client)
+        public override ActionResult Create([Bind(Include = BindInclude)] Client client)
         {
             return base.Create(client);
         }
@@ -17,7 +21,7 @@ namespace Scheduler.Web.Controllers
         // POST: Clients/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public override ActionResult Edit([Bind(Include = "Id,NetworkName,Description,Created,CreatedBy,LastUpdated,LastUpdatedBy")] Client client)
+        public override ActionResult Edit([Bind(Include = BindInclude)] Client client)
         {
             return base.Edit(client);
         }

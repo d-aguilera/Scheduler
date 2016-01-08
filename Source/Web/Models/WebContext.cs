@@ -15,7 +15,7 @@ namespace Scheduler.Web.Models
 
         public DbSet<Client> Clients { get; set; }
 
-        public DbSet<ScheduleEntry> Schedules { get; set; }
+        public DbSet<ScheduleEntry> ScheduleEntries { get; set; }
 
         public DbSet<LogEntry> LogEntries { get; set; }
     }

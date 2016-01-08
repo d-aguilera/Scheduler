@@ -12,6 +12,12 @@
             @Html.DisplayNameFor(model => model.Client.NetworkName)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.ShellCommand)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WorkingDirectory)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Started)
         </th>
         <th>
@@ -45,6 +51,12 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Client.NetworkName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ShellCommand)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WorkingDirectory)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Started)

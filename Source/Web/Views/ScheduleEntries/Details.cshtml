@@ -7,7 +7,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>ScheduleEntry</h4>
+    <h4>Schedule Entry</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -32,6 +32,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.ShellCommand)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WorkingDirectory)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WorkingDirectory)
         </dd>
 
         <dt>

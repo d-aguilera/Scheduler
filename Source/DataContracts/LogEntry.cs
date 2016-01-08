@@ -13,6 +13,29 @@ namespace Scheduler.DataContracts
     public class LogEntry : Auditable
     {
         [DataMember]
+        [Display(Name = "LogEntryShellCommandName", ShortName = "LogEntryShellCommandShortName", ResourceType = typeof(Resources))]
+        public string ShellCommand
+        {
+            get;
+            set;
+        }
+
+        [DataMember]
+        [Display(Name = "LogEntryWorkingDirectoryName", ShortName = "LogEntryWorkingDirectoryShortName", ResourceType = typeof(Resources))]
+        public string WorkingDirectory
+        {
+            get;
+            set;
+        }
+
+        [DataMember]
+        public int ScheduleEntryId
+        {
+            get;
+            set;
+        }
+
+        [DataMember]
         public int ClientId
         {
             get;
@@ -54,6 +77,13 @@ namespace Scheduler.DataContracts
         [DataMember]
         [Display(Name = "LogEntryErrorOutName", ShortName = "LogEntryErrorOutShortName", ResourceType = typeof(Resources))]
         public string ErrorOut
+        {
+            get;
+            set;
+        }
+
+        [ForeignKey("ScheduleEntryId")]
+        public ScheduleEntry ScheduleEntry
         {
             get;
             set;

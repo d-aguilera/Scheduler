@@ -9,9 +9,6 @@ namespace Scheduler.Web.Controllers
 {
     public abstract class ControllerBase<TEntity> : IndexControllerBase<TEntity> where TEntity : Identifiable
     {
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-
         // GET: ScheduleEntries/Create
         public virtual ActionResult Create()
         {
@@ -91,8 +88,8 @@ namespace Scheduler.Web.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             var set = Context.Set<TEntity>();
-            TEntity client = set.Find(id);
-            set.Remove(client);
+            TEntity entity = set.Find(id);
+            set.Remove(entity);
             Context.SaveChanges();
             return RedirectToAction("Index");
         }

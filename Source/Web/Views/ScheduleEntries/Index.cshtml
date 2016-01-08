@@ -9,6 +9,7 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+<p>@ViewBag.Message</p>
 <table class="table">
     <tr>
         <th>
@@ -19,6 +20,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ShellCommand)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WorkingDirectory)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Enabled)
@@ -50,6 +54,9 @@
             @Html.DisplayFor(modelItem => item.ShellCommand)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.WorkingDirectory)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Enabled)
         </td>
         <td>
@@ -65,9 +72,10 @@
             @Html.DisplayFor(modelItem => item.LastUpdatedBy)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
+            @Html.ActionLink("Execute", "Execute", new { id = item.Id })
         </td>
     </tr>
 }

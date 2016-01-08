@@ -40,6 +40,14 @@ namespace Scheduler.DataContracts
         }
 
         [DataMember]
+        [Display(Name = "ScheduleEntryWorkingDirectoryName", ShortName = "ScheduleEntryWorkingDirectoryShortName", ResourceType = typeof(Resources))]
+        public string WorkingDirectory
+        {
+            get;
+            set;
+        }
+
+        [DataMember]
         [Display(Name = "ScheduleEntryEnabledName", ShortName = "ScheduleEntryEnabledShortName", ResourceType = typeof(Resources))]
         public bool Enabled
         {

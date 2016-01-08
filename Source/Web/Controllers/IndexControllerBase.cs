@@ -19,9 +19,10 @@ namespace Scheduler.Web.Controllers
         }
 
         // GET: Entities
-        public virtual ActionResult Index()
+        public virtual ActionResult Index(string message = "")
         {
             var set = Context.Set<TEntity>();
+            ViewBag.Message = message;
             return View(set.ToList());
         }
 

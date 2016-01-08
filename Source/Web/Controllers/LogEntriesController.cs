@@ -9,9 +9,10 @@ namespace Scheduler.Web.Controllers
     public class LogEntriesController : IndexControllerBase<LogEntry>
     {
         // GET: LogEntries
-        public override ActionResult Index()
+        public override ActionResult Index(string message = "")
         {
             var logEntries = Context.LogEntries.Include(l => l.Client);
+            ViewBag.Message = message;
             return View(logEntries.ToList());
         }
     }
