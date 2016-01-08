@@ -209,6 +209,7 @@
     <Content Include="Views\LogEntries\Delete.cshtml" />
     <Content Include="Views\LogEntries\Details.cshtml" />
     <Content Include="Views\LogEntries\Index.cshtml" />
+    <Content Include="Views\ScheduleEntries\Execute.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -219,6 +220,10 @@
     <Content Include="Scripts\jquery-2.1.4.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AgentServiceClient\Scheduler.AgentService.Client.csproj">
+      <Project>{fe8797a2-847e-42ca-af83-f76e4f06a24a}</Project>
+      <Name>Scheduler.AgentService.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\Scheduler.Common.csproj">
       <Project>{ac1e94ca-b8ff-417c-a332-d49f49c6d8b9}</Project>
       <Name>Scheduler.Common</Name>
@@ -226,6 +231,10 @@
     <ProjectReference Include="..\DataContracts\Scheduler.DataContracts.csproj">
       <Project>{fd0050ab-4688-4c5a-bb00-472c67d5abab}</Project>
       <Name>Scheduler.DataContracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServiceContracts\Scheduler.ServiceContracts.csproj">
+      <Project>{42c4b705-c558-47e4-a7ca-fbd7edf54b08}</Project>
+      <Name>Scheduler.ServiceContracts</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

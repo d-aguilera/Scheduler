@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.DataContracts", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.Common", "Common\Scheduler.Common.csproj", "{AC1E94CA-B8FF-417C-A332-D49F49C6D8B9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.AgentService.Client", "AgentServiceClient\Scheduler.AgentService.Client.csproj", "{FE8797A2-847E-42CA-AF83-F76E4F06A24A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.ServiceContracts", "ServiceContracts\Scheduler.ServiceContracts.csproj", "{42C4B705-C558-47E4-A7CA-FBD7EDF54B08}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{AC1E94CA-B8FF-417C-A332-D49F49C6D8B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC1E94CA-B8FF-417C-A332-D49F49C6D8B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC1E94CA-B8FF-417C-A332-D49F49C6D8B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE8797A2-847E-42CA-AF83-F76E4F06A24A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE8797A2-847E-42CA-AF83-F76E4F06A24A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE8797A2-847E-42CA-AF83-F76E4F06A24A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE8797A2-847E-42CA-AF83-F76E4F06A24A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42C4B705-C558-47E4-A7CA-FBD7EDF54B08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42C4B705-C558-47E4-A7CA-FBD7EDF54B08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42C4B705-C558-47E4-A7CA-FBD7EDF54B08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42C4B705-C558-47E4-A7CA-FBD7EDF54B08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
