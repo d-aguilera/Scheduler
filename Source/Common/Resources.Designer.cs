@@ -151,7 +151,7 @@ namespace Scheduler.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Computer Network Name.
+        ///   Looks up a localized string similar to Machine Name.
         /// </summary>
         public static string ClientNetworkNameName {
             get {
@@ -160,7 +160,7 @@ namespace Scheduler.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Computer.
+        ///   Looks up a localized string similar to Machine.
         /// </summary>
         public static string ClientNetworkNameShortName {
             get {
@@ -241,6 +241,24 @@ namespace Scheduler.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Shell Command.
+        /// </summary>
+        public static string LogEntryShellCommandName {
+            get {
+                return ResourceManager.GetString("LogEntryShellCommandName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command.
+        /// </summary>
+        public static string LogEntryShellCommandShortName {
+            get {
+                return ResourceManager.GetString("LogEntryShellCommandShortName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Started At.
         /// </summary>
         public static string LogEntryStartedName {
@@ -255,6 +273,24 @@ namespace Scheduler.Common {
         public static string LogEntryStartedShortName {
             get {
                 return ResourceManager.GetString("LogEntryStartedShortName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Working Directory.
+        /// </summary>
+        public static string LogEntryWorkingDirectoryName {
+            get {
+                return ResourceManager.GetString("LogEntryWorkingDirectoryName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Directory.
+        /// </summary>
+        public static string LogEntryWorkingDirectoryShortName {
+            get {
+                return ResourceManager.GetString("LogEntryWorkingDirectoryShortName", resourceCulture);
             }
         }
         
@@ -318,6 +354,24 @@ namespace Scheduler.Common {
         public static string ScheduleEntryShellCommandShortName {
             get {
                 return ResourceManager.GetString("ScheduleEntryShellCommandShortName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Working Directory.
+        /// </summary>
+        public static string ScheduleEntryWorkingDirectoryName {
+            get {
+                return ResourceManager.GetString("ScheduleEntryWorkingDirectoryName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Directory.
+        /// </summary>
+        public static string ScheduleEntryWorkingDirectoryShortName {
+            get {
+                return ResourceManager.GetString("ScheduleEntryWorkingDirectoryShortName", resourceCulture);
             }
         }
     }

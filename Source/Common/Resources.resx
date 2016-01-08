@@ -148,10 +148,10 @@
     <value>Description</value>
   </data>
   <data name="ClientNetworkNameName" xml:space="preserve">
-    <value>Computer Network Name</value>
+    <value>Machine Name</value>
   </data>
   <data name="ClientNetworkNameShortName" xml:space="preserve">
-    <value>Computer</value>
+    <value>Machine</value>
   </data>
   <data name="LogEntryConsoleOutName" xml:space="preserve">
     <value>Console Output</value>
@@ -177,11 +177,23 @@
   <data name="LogEntryFinishedShortName" xml:space="preserve">
     <value>Finished At</value>
   </data>
+  <data name="LogEntryShellCommandName" xml:space="preserve">
+    <value>Shell Command</value>
+  </data>
+  <data name="LogEntryShellCommandShortName" xml:space="preserve">
+    <value>Command</value>
+  </data>
   <data name="LogEntryStartedName" xml:space="preserve">
     <value>Started At</value>
   </data>
   <data name="LogEntryStartedShortName" xml:space="preserve">
     <value>Started At</value>
+  </data>
+  <data name="LogEntryWorkingDirectoryName" xml:space="preserve">
+    <value>Working Directory</value>
+  </data>
+  <data name="LogEntryWorkingDirectoryShortName" xml:space="preserve">
+    <value>Directory</value>
   </data>
   <data name="ScheduleEntryCronExpressionName" xml:space="preserve">
     <value>Cron Expression</value>
@@ -203,5 +215,11 @@
   </data>
   <data name="ScheduleEntryShellCommandShortName" xml:space="preserve">
     <value>Command</value>
+  </data>
+  <data name="ScheduleEntryWorkingDirectoryName" xml:space="preserve">
+    <value>Working Directory</value>
+  </data>
+  <data name="ScheduleEntryWorkingDirectoryShortName" xml:space="preserve">
+    <value>Directory</value>
   </data>
 </root>
