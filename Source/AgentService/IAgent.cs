@@ -11,7 +11,7 @@ namespace Scheduler.AgentService
     [ServiceContract]
     public interface IAgent
     {
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void Execute(string shellCommand);
 
         [OperationContract]
