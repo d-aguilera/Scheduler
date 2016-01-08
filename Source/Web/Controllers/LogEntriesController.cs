@@ -1,4 +1,5 @@
-﻿using Scheduler.Web.Models;
+﻿using Scheduler.DataContracts;
+using Scheduler.Web.Models;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
