@@ -141,6 +141,18 @@
   <data name="AuditableLastUpdatedShortName" xml:space="preserve">
     <value>Last Updated On</value>
   </data>
+  <data name="ClientAgentPortName" xml:space="preserve">
+    <value>Agent Port</value>
+  </data>
+  <data name="ClientAgentPortShortName" xml:space="preserve">
+    <value>Agent Port</value>
+  </data>
+  <data name="ClientAgentVirtualDirectoryName" xml:space="preserve">
+    <value>Agent Virtual Directory</value>
+  </data>
+  <data name="ClientAgentVirtualDirectoryShortName" xml:space="preserve">
+    <value>Agent Virtual Dir</value>
+  </data>
   <data name="ClientDescriptionName" xml:space="preserve">
     <value>Description</value>
   </data>
@@ -148,10 +160,10 @@
     <value>Description</value>
   </data>
   <data name="ClientNetworkNameName" xml:space="preserve">
-    <value>Machine Name</value>
+    <value>Host Name</value>
   </data>
   <data name="ClientNetworkNameShortName" xml:space="preserve">
-    <value>Machine</value>
+    <value>Host Name</value>
   </data>
   <data name="LogEntryConsoleOutName" xml:space="preserve">
     <value>Console Output</value>
@@ -176,6 +188,12 @@
   </data>
   <data name="LogEntryFinishedShortName" xml:space="preserve">
     <value>Finished At</value>
+  </data>
+  <data name="LogEntryForcedName" xml:space="preserve">
+    <value>Forced Execution</value>
+  </data>
+  <data name="LogEntryForcedShortName" xml:space="preserve">
+    <value>Forced</value>
   </data>
   <data name="LogEntryShellCommandName" xml:space="preserve">
     <value>Shell Command</value>

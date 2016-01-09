@@ -133,6 +133,42 @@ namespace Scheduler.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Agent Port.
+        /// </summary>
+        public static string ClientAgentPortName {
+            get {
+                return ResourceManager.GetString("ClientAgentPortName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agent Port.
+        /// </summary>
+        public static string ClientAgentPortShortName {
+            get {
+                return ResourceManager.GetString("ClientAgentPortShortName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agent Virtual Directory.
+        /// </summary>
+        public static string ClientAgentVirtualDirectoryName {
+            get {
+                return ResourceManager.GetString("ClientAgentVirtualDirectoryName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agent Virtual Dir.
+        /// </summary>
+        public static string ClientAgentVirtualDirectoryShortName {
+            get {
+                return ResourceManager.GetString("ClientAgentVirtualDirectoryShortName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string ClientDescriptionName {
@@ -151,7 +187,7 @@ namespace Scheduler.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Machine Name.
+        ///   Looks up a localized string similar to Host Name.
         /// </summary>
         public static string ClientNetworkNameName {
             get {
@@ -160,7 +196,7 @@ namespace Scheduler.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Machine.
+        ///   Looks up a localized string similar to Host Name.
         /// </summary>
         public static string ClientNetworkNameShortName {
             get {
@@ -237,6 +273,24 @@ namespace Scheduler.Common {
         public static string LogEntryFinishedShortName {
             get {
                 return ResourceManager.GetString("LogEntryFinishedShortName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forced Execution.
+        /// </summary>
+        public static string LogEntryForcedName {
+            get {
+                return ResourceManager.GetString("LogEntryForcedName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Forced.
+        /// </summary>
+        public static string LogEntryForcedShortName {
+            get {
+                return ResourceManager.GetString("LogEntryForcedShortName", resourceCulture);
             }
         }
         
