@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.SchedulerServiceC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.DataAccess", "DataAccess\Scheduler.DataAccess.csproj", "{C839F6E8-0A76-4E57-9F24-A3E35EF8799E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.CronService", "CronService\Scheduler.CronService.csproj", "{97A4FA8F-BAC9-4DE2-B10B-C16310751AC7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{C839F6E8-0A76-4E57-9F24-A3E35EF8799E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C839F6E8-0A76-4E57-9F24-A3E35EF8799E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C839F6E8-0A76-4E57-9F24-A3E35EF8799E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97A4FA8F-BAC9-4DE2-B10B-C16310751AC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97A4FA8F-BAC9-4DE2-B10B-C16310751AC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97A4FA8F-BAC9-4DE2-B10B-C16310751AC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97A4FA8F-BAC9-4DE2-B10B-C16310751AC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
