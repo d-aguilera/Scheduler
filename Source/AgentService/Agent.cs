@@ -1,4 +1,5 @@
 ﻿using Scheduler.DataContracts;
+using Scheduler.SchedulerService.Client;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,7 +13,7 @@ namespace Scheduler.AgentService
 {
     public class Agent : IAgent
     {
-        public void Execute(string shellCommand, string workingDirectory, int? scheduleEntryId, int clientId, bool forced)
+        public void Execute(string shellCommand, string workingDirectory, int scheduleEntryId, int clientId, bool forced)
         {
             DateTime started = DateTime.UtcNow;
             int? processId = null;
@@ -41,17 +42,38 @@ namespace Scheduler.AgentService
                     process.BeginOutputReadLine();
                     process.BeginErrorReadLine();
                     process.WaitForExit();
-                    AddLogEntry(scheduleEntryId, clientId, process.StartTime, process.ExitTime, process.ExitCode, process.Id, consoleOut, errorOut);
+                    AddLogEntry(shellCommand, workingDirectory, scheduleEntryId, clientId, process.StartTime, process.ExitTime, process.ExitCode, process.Id, consoleOut, errorOut);
                 };
             }
             catch (Win32Exception ex)
             {
-                AddLogEntry(scheduleEntryId, clientId, started, DateTime.UtcNow, ex.ErrorCode, processId, consoleOut, errorOut + Environment.NewLine + ex.ToString());
+                AddLogEntry(shellCommand, workingDirectory, scheduleEntryId, clientId, started, DateTime.UtcNow, ex.ErrorCode, processId, consoleOut, errorOut + Environment.NewLine + ex.ToString());
             }
         }
 
-        void AddLogEntry(int? scheduleEntryId, int clientId, DateTime started, DateTime finished, int? exitCode, int? processId, string consoleOut, string errorOut)
+        void AddLogEntry(string shellCommand, string workingDirectory, int scheduleEntryId, int clientId, DateTime started, DateTime finished, int? exitCode, int? processId, string consoleOut, string errorOut)
         {
+            var sc = ServiceSecurityContext.Current;
+            var createdBy = null == sc ? "?" : sc.PrimaryIdentity.Name;
+
+            var logEntry = new LogEntry
+            {
+                ShellCommand = shellCommand,
+                WorkingDirectory = workingDirectory,
+                ScheduleEntryId = scheduleEntryId,
+                ClientId = clientId,
+                Started = started,
+                Finished = finished,
+                ExitCode = exitCode,
+                ConsoleOut = consoleOut,
+                ErrorOut = errorOut,
+                Created = DateTime.UtcNow,
+                CreatedBy = createdBy,
+                LastUpdated = null,
+                LastUpdatedBy = null,
+            };
+            var channel = SchedulerServiceClientFactory.CreateChannel();
+            channel.LogExecution(logEntry);
         }
     }
 }
