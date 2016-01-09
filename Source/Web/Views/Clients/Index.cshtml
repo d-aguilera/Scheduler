@@ -18,6 +18,12 @@
             @Html.DisplayNameFor(model => model.Description)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.AgentPort)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AgentVirtualDirectory)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Created)
         </th>
         <th>
@@ -39,6 +45,12 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AgentPort)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AgentVirtualDirectory)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Created)

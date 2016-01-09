@@ -8,7 +8,7 @@ namespace Scheduler.Web.Controllers
     {
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        const string BindInclude = "Id,NetworkName,Description,Created,CreatedBy,LastUpdated,LastUpdatedBy";
+        const string BindInclude = "Id,NetworkName,AgentPort,AgentVirtualDirectory,Description,Created,CreatedBy,LastUpdated,LastUpdatedBy";
 
         // POST: Clients/Create
         [HttpPost]

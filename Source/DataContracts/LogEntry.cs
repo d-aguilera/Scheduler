@@ -82,6 +82,14 @@ namespace Scheduler.DataContracts
             set;
         }
 
+        [DataMember]
+        [Display(Name = "LogEntryForcedName", ShortName = "LogEntryForcedShortName", ResourceType = typeof(Resources))]
+        public bool Forced
+        {
+            get;
+            set;
+        }
+
         [ForeignKey("ScheduleEntryId")]
         public ScheduleEntry ScheduleEntry
         {

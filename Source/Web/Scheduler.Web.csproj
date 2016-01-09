@@ -148,14 +148,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Toast.cs" />
+    <Compile Include="Models\ToastTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\WebContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -168,6 +171,8 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\toastr.scss" />
+    <Content Include="Content\toastr.less" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -183,6 +188,8 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\toastr.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -220,17 +227,21 @@
     <Content Include="Scripts\jquery-2.1.4.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AgentServiceClient\Scheduler.AgentService.Client.csproj">
-      <Project>{fe8797a2-847e-42ca-af83-f76e4f06a24a}</Project>
-      <Name>Scheduler.AgentService.Client</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Common\Scheduler.Common.csproj">
       <Project>{ac1e94ca-b8ff-417c-a332-d49f49c6d8b9}</Project>
       <Name>Scheduler.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DataAccess\Scheduler.DataAccess.csproj">
+      <Project>{c839f6e8-0a76-4e57-9f24-a3e35ef8799e}</Project>
+      <Name>Scheduler.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataContracts\Scheduler.DataContracts.csproj">
       <Project>{fd0050ab-4688-4c5a-bb00-472c67d5abab}</Project>
       <Name>Scheduler.DataContracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SchedulerServiceClient\Scheduler.SchedulerServiceClient.csproj">
+      <Project>{639c51e1-2b2f-4987-b90c-d9ac8b6402cd}</Project>
+      <Name>Scheduler.SchedulerServiceClient</Name>
     </ProjectReference>
     <ProjectReference Include="..\ServiceContracts\Scheduler.ServiceContracts.csproj">
       <Project>{42c4b705-c558-47e4-a7ca-fbd7edf54b08}</Project>

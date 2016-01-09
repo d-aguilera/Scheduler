@@ -1,10 +1,16 @@
-﻿using System.Data.Entity;
-using System.Linq;
-using System.Web.Mvc;
-using Scheduler.Web.Models;
+﻿using Newtonsoft.Json;
+using Scheduler.Common;
 using Scheduler.DataContracts;
+using Scheduler.SchedulerService.Client;
+using Scheduler.Web.Models;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Diagnostics;
+using System.Linq;
 using System.Net;
-using Scheduler.AgentService.Client;
+using System.Text;
+using System.Web.Mvc;
 
 namespace Scheduler.Web.Controllers
 {
@@ -15,11 +21,10 @@ namespace Scheduler.Web.Controllers
         const string BindInclude = "Id,ClientId,CronExpression,ShellCommand,WorkingDirectory,Enabled,Created,CreatedBy,LastUpdated,LastUpdatedBy";
 
         // GET: ScheduleEntries
-        public override ActionResult Index(string message = "")
+        public override ActionResult Index(Toast toast)
         {
-            var schedules = Context.ScheduleEntries.Include(s => s.Client);
-            ViewBag.Message = message;
-            return View(schedules.ToList());
+            ViewBag.Toast = toast;
+            return View(Context.Set<ScheduleEntry>().Include(s => s.Client).ToList());
         }
 
         // POST: ScheduleEntries/Create
@@ -45,7 +50,7 @@ namespace Scheduler.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var entity = Context.ScheduleEntries.Find(id);
+            var entity = Context.Set<ScheduleEntry>().Find(id);
             if (entity == null)
             {
                 return HttpNotFound();
@@ -58,24 +63,51 @@ namespace Scheduler.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ExecuteConfirmed(int id)
         {
-            var set = Context.ScheduleEntries;
-            var scheduleEntry = set.Find(id);
-            var agentServiceClient = AgentServiceClientFactory.CreateChannel();
-            agentServiceClient.Execute(
-                scheduleEntry.ShellCommand, 
-                scheduleEntry.WorkingDirectory, 
-                scheduleEntry.Id, 
-                scheduleEntry.ClientId, 
-                true
-                );
-            return RedirectToAction("Index", new { message = "Launched!" });
+            var scheduleEntry = Context.Set<ScheduleEntry>().Find(id);
+
+            var schedulerServiceClient = SchedulerServiceClientFactory.CreateChannel();
+
+            try
+            {
+                schedulerServiceClient.Execute(scheduleEntry, true);
+
+                var toast = new Toast
+                {
+                    Title = "Command is executing.",
+                    Message = "Check the <a href=\"" + Url.Action("Index", "LogEntries") + "\">Log page</a> for details.",
+                    Type = ToastTypes.Success
+                };
+
+                return RedirectToAction("Index", new { toast = toast });
+            }
+            catch (Exception ex)
+            {
+                var source = "Scheduler";
+                var args = new Dictionary<string, object> {
+                    { "id", id },
+                    { "ScheduleEntry", scheduleEntry }
+                };
+                var message = Helpers.GetFullExceptionMessage("Could not launch execution.", ex, args);
+
+                EventLog.WriteEntry(source, message, EventLogEntryType.Error);
+
+                var toast = new Toast
+                {
+                    Title = "Could not execute command",
+                    Message = ex.Message,
+                    Type = ToastTypes.Error
+                };
+
+                return RedirectToAction("Index", new { toast = toast });
+            }
         }
 
         protected override void AddSelectListsToViewBag(Identifiable entity = default(Identifiable))
         {
+            var set = Context.Set<Client>().ToList();
             ViewBag.ClientId = entity == default(Identifiable)
-                ? new SelectList(Context.Clients, "Id", "NetworkName")
-                : new SelectList(Context.Clients, "Id", "NetworkName", ((ScheduleEntry)entity).ClientId)
+                ? new SelectList(set, "Id", "NetworkName")
+                : new SelectList(set, "Id", "NetworkName", ((ScheduleEntry)entity).ClientId)
                 ;
         }
     }

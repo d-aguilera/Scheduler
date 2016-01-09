@@ -1,5 +1,7 @@
-﻿using Scheduler.DataContracts;
+﻿using Scheduler.DataAccess;
+using Scheduler.DataContracts;
 using Scheduler.Web.Models;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -19,11 +21,10 @@ namespace Scheduler.Web.Controllers
         }
 
         // GET: Entities
-        public virtual ActionResult Index(string message = "")
+        public virtual ActionResult Index(Toast toast)
         {
-            var set = Context.Set<TEntity>();
-            ViewBag.Message = message;
-            return View(set.ToList());
+            ViewBag.Toast = toast;
+            return View(Context.Set<TEntity>().ToList());
         }
 
         // GET: Entities/Details/5
@@ -33,8 +34,7 @@ namespace Scheduler.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var set = Context.Set<TEntity>();
-            TEntity entity = set.Find(id);
+            var entity = Context.Set<TEntity>().Find(id);
             if (entity == null)
             {
                 return HttpNotFound();
@@ -46,7 +46,7 @@ namespace Scheduler.Web.Controllers
         {
             if (disposing)
             {
-                Context.Dispose();
+                _dbContext.Dispose();
             }
             base.Dispose(disposing);
         }

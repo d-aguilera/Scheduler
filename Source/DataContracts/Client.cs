@@ -28,5 +28,21 @@ namespace Scheduler.DataContracts
             get;
             set;
         }
+
+        [DataMember]
+        [Display(Name = "ClientAgentPortName", ShortName = "ClientAgentPortShortName", ResourceType = typeof(Resources))]
+        public int? AgentPort
+        {
+            get;
+            set;
+        }
+
+        [DataMember]
+        [Display(Name = "ClientAgentVirtualDirectoryName", ShortName = "ClientVirtualDirectoryShortName", ResourceType = typeof(Resources))]
+        public string AgentVirtualDirectory
+        {
+            get;
+            set;
+        }
     }
 }

@@ -15,9 +15,6 @@
             @Html.DisplayNameFor(model => model.ShellCommand)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.WorkingDirectory)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Started)
         </th>
         <th>
@@ -27,22 +24,13 @@
             @Html.DisplayNameFor(model => model.ExitCode)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ConsoleOut)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ErrorOut)
+            @Html.DisplayNameFor(model => model.Forced)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Created)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.CreatedBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastUpdated)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastUpdatedBy)
         </th>
         <th></th>
     </tr>
@@ -56,9 +44,6 @@
             @Html.DisplayFor(modelItem => item.ShellCommand)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.WorkingDirectory)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Started)
         </td>
         <td>
@@ -68,22 +53,13 @@
             @Html.DisplayFor(modelItem => item.ExitCode)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ConsoleOut)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ErrorOut)
+            @Html.DisplayFor(modelItem => item.Forced)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Created)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CreatedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastUpdated)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastUpdatedBy)
         </td>
         <td>
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |

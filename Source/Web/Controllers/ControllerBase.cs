@@ -24,8 +24,7 @@ namespace Scheduler.Web.Controllers
             if (ModelState.IsValid)
             {
                 SetDefaultValuesForCreate(entity);
-                var set = Context.Set<TEntity>();
-                set.Add(entity);
+                Context.Set<TEntity>().Add(entity);
                 Context.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -40,8 +39,7 @@ namespace Scheduler.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var set = Context.Set<TEntity>();
-            var entity = set.Find(id);
+            var entity = Context.Set<TEntity>().Find(id);
             if (entity == null)
             {
                 return HttpNotFound();
@@ -73,8 +71,7 @@ namespace Scheduler.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var set = Context.Set<TEntity>();
-            var entity = set.Find(id);
+            var entity = Context.Set<TEntity>().Find(id);
             if (entity == null)
             {
                 return HttpNotFound();
@@ -88,7 +85,7 @@ namespace Scheduler.Web.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             var set = Context.Set<TEntity>();
-            TEntity entity = set.Find(id);
+            var entity = set.Find(id);
             set.Remove(entity);
             Context.SaveChanges();
             return RedirectToAction("Index");
