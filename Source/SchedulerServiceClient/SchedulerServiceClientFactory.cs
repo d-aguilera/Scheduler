@@ -15,8 +15,8 @@ namespace Scheduler.SchedulerService.Client
         public static IScheduler CreateChannel()
         {
             var factory = new ChannelFactory<IScheduler>("SchedulerService");
-            factory.Credentials.UserName.UserName = Helpers.FromBase64(ConfigurationManager.AppSettings["UserName"]);
-            factory.Credentials.UserName.Password = Helpers.FromBase64(ConfigurationManager.AppSettings["Password"]);
+            factory.Credentials.UserName.UserName = Helpers.FromBase64(ConfigurationManager.AppSettings["Scheduler.Basic.UserName"]);
+            factory.Credentials.UserName.Password = Helpers.FromBase64(ConfigurationManager.AppSettings["Scheduler.Basic.Password"]);
 
             var channel = factory.CreateChannel();
             return channel;

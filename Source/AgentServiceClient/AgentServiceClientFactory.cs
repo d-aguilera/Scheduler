@@ -15,8 +15,8 @@ namespace Scheduler.AgentService.Client
         public static IAgent CreateChannel(string networkName, int? port, string virtualDirectory)
         {
             var factory = new ChannelFactory<IAgent>("AgentService");
-            factory.Credentials.UserName.UserName = Helpers.FromBase64(ConfigurationManager.AppSettings["UserName"]);
-            factory.Credentials.UserName.Password = Helpers.FromBase64(ConfigurationManager.AppSettings["Password"]);
+            factory.Credentials.UserName.UserName = Helpers.FromBase64(ConfigurationManager.AppSettings["Scheduler.Basic.UserName"]);
+            factory.Credentials.UserName.Password = Helpers.FromBase64(ConfigurationManager.AppSettings["Scheduler.Basic.Password"]);
 
             var uriString = string.Format(
                 CultureInfo.InvariantCulture,
