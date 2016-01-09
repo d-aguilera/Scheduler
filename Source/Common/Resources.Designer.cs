@@ -295,6 +295,24 @@ namespace Scheduler.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Process ID.
+        /// </summary>
+        public static string LogEntryProcessIdName {
+            get {
+                return ResourceManager.GetString("LogEntryProcessIdName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PID.
+        /// </summary>
+        public static string LogEntryProcessIdShortName {
+            get {
+                return ResourceManager.GetString("LogEntryProcessIdShortName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Shell Command.
         /// </summary>
         public static string LogEntryShellCommandName {

@@ -195,6 +195,12 @@
   <data name="LogEntryForcedShortName" xml:space="preserve">
     <value>Forced</value>
   </data>
+  <data name="LogEntryProcessIdName" xml:space="preserve">
+    <value>Process ID</value>
+  </data>
+  <data name="LogEntryProcessIdShortName" xml:space="preserve">
+    <value>PID</value>
+  </data>
   <data name="LogEntryShellCommandName" xml:space="preserve">
     <value>Shell Command</value>
   </data>
