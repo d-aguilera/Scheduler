@@ -47,12 +47,17 @@ namespace Scheduler.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var entity = Context.Set<TEntity>().Find(id);
+            var entity = FindEntityForDetailsOrDelete(id.Value);
             if (entity == null)
             {
                 return HttpNotFound();
             }
             return View(entity);
+        }
+
+        protected virtual TEntity FindEntityForDetailsOrDelete(int id)
+        {
+            return Context.Set<TEntity>().Find(id);
         }
 
         protected override void Dispose(bool disposing)

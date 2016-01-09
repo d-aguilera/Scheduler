@@ -17,6 +17,13 @@ namespace Scheduler.Web.Controllers
             }
         }
 
+        protected override LogEntry FindEntityForDetailsOrDelete(int id)
+        {
+            return Context.Set<LogEntry>()
+                .Include(e => e.Client)
+                .SingleOrDefault(e => e.Id == id);
+        }
+
         public override ActionResult Create()
         {
             throw new InvalidOperationException();

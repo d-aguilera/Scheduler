@@ -31,6 +31,13 @@ namespace Scheduler.Web.Controllers
             }
         }
 
+        protected override ScheduleEntry FindEntityForDetailsOrDelete(int id)
+        {
+            return Context.Set<ScheduleEntry>()
+                .Include(e => e.Client)
+                .SingleOrDefault(e => e.Id == id);
+        }
+
         // POST: ScheduleEntries/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
