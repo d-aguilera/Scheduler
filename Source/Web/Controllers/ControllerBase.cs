@@ -26,10 +26,24 @@ namespace Scheduler.Web.Controllers
                 SetDefaultValuesForCreate(entity);
                 Context.Set<TEntity>().Add(entity);
                 Context.SaveChanges();
-                return RedirectToAction("Index");
+
+                OnCreate(entity);
+
+                var toast = new Toast
+                {
+                    Title = "Created.",
+                    Type = ToastTypes.Success
+                };
+
+                return RedirectToAction("Index", new { toastToken = toast.Encrypt() });
             }
+
             AddSelectListsToViewBag(entity);
             return View(entity);
+        }
+
+        protected virtual void OnCreate(TEntity entity)
+        {
         }
 
         // GET: Entities/Edit/5
@@ -58,14 +72,28 @@ namespace Scheduler.Web.Controllers
                 SetDefaultValuesForEdit(entity);
                 Context.Entry(entity).State = EntityState.Modified;
                 Context.SaveChanges();
-                return RedirectToAction("Index");
+
+                OnEdit(entity);
+
+                var toast = new Toast
+                {
+                    Title = "Updated.",
+                    Type = ToastTypes.Success
+                };
+
+                return RedirectToAction("Index", new { toastToken = toast.Encrypt() });
             }
+
             AddSelectListsToViewBag(entity);
             return View(entity);
         }
 
+        protected virtual void OnEdit(TEntity entity)
+        {
+        }
+
         // GET: Entities/Delete/5
-        public ActionResult Delete(int? id)
+        public virtual ActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -82,13 +110,26 @@ namespace Scheduler.Web.Controllers
         // POST: Entities/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public virtual ActionResult DeleteConfirmed(int id)
         {
             var set = Context.Set<TEntity>();
             var entity = set.Find(id);
             set.Remove(entity);
             Context.SaveChanges();
-            return RedirectToAction("Index");
+
+            OnDeleteConfirmed(id);
+
+            var toast = new Toast
+            {
+                Title = "Deleted",
+                Type = ToastTypes.Success
+            };
+
+            return RedirectToAction("Index", new { toastToken = toast.Encrypt() });
+        }
+
+        protected virtual void OnDeleteConfirmed(int id)
+        {
         }
 
         protected virtual void SetDefaultValuesForCreate(Identifiable entity)

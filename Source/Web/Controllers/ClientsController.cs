@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using Scheduler.Web.Models;
 using Scheduler.DataContracts;
 
 namespace Scheduler.Web.Controllers

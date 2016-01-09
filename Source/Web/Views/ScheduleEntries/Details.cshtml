@@ -1,13 +1,12 @@
 ﻿@model Scheduler.DataContracts.ScheduleEntry
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Schedule Entry Details";
 }
 
-<h2>Details</h2>
+<h2>@ViewBag.Title</h2>
 
 <div>
-    <h4>Schedule Entry</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -31,7 +30,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ShellCommand)
+            <pre>@Html.DisplayFor(model => model.ShellCommand)</pre>
         </dd>
 
         <dt>

@@ -1,13 +1,12 @@
 ﻿@model Scheduler.DataContracts.LogEntry
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Log Entry Details";
 }
 
-<h2>Details</h2>
+<h2>@ViewBag.Title</h2>
 
 <div>
-    <h4>LogEntry</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -23,7 +22,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ShellCommand)
+            <pre>@Html.DisplayFor(model => model.ShellCommand)</pre>
         </dd>
 
         <dt>
@@ -63,7 +62,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ConsoleOut)
+            <pre>@Html.DisplayFor(model => model.ConsoleOut)</pre>
         </dd>
 
         <dt>
@@ -71,7 +70,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ErrorOut)
+            <pre>@Html.DisplayFor(model => model.ErrorOut)</pre>
         </dd>
 
         <dt>

@@ -1,7 +1,8 @@
 ﻿using Scheduler.DataAccess;
 using Scheduler.DataContracts;
 using Scheduler.Web.Models;
-using System.Data.Entity;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -21,10 +22,22 @@ namespace Scheduler.Web.Controllers
         }
 
         // GET: Entities
-        public virtual ActionResult Index(Toast toast)
+        public virtual ActionResult Index(string toastToken)
         {
-            ViewBag.Toast = toast;
-            return View(Context.Set<TEntity>().ToList());
+            if (!string.IsNullOrEmpty(toastToken))
+            {
+                var toast = Toast.Decrypt(toastToken);
+                ViewBag.Toast = toast;
+            }
+            return View(IndexSet);
+        }
+
+        protected virtual IEnumerable<TEntity> IndexSet
+        {
+            get
+            {
+                return Context.Set<TEntity>().OrderBy(e => e.Id).ToList();
+            }
         }
 
         // GET: Entities/Details/5
