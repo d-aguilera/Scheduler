@@ -44,7 +44,7 @@ namespace Scheduler.DataContracts
 
         [DataMember]
         [Display(Name = "LogEntryStartedName", ShortName = "LogEntryStartedShortName", ResourceType = typeof(Resources))]
-        public DateTime Started
+        public DateTime? Started
         {
             get;
             set;
@@ -61,6 +61,14 @@ namespace Scheduler.DataContracts
         [DataMember]
         [Display(Name = "LogEntryExitCodeName", ShortName = "LogEntryExitCodeShortName", ResourceType = typeof(Resources))]
         public int? ExitCode
+        {
+            get;
+            set;
+        }
+
+        [DataMember]
+        [Display(Name = "LogEntryProcessIdName", ShortName = "LogEntryProcessIdShortName", ResourceType = typeof(Resources))]
+        public int? ProcessId
         {
             get;
             set;
