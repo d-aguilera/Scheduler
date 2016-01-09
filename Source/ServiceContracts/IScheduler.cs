@@ -6,12 +6,15 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 
-namespace Scheduler.AgentService
+namespace Scheduler.SchedulerService
 {
     [ServiceContract]
-    public interface IAgent
+    public interface IScheduler
     {
         [OperationContract(IsOneWay = true)]
-        void Execute(string shellCommand, string workingDirectory, int scheduleEntryId, int clientId, bool forced);
+        void Execute(ScheduleEntry scheduleEntry, bool forced);
+
+        [OperationContract(IsOneWay = true)]
+        void LogExecution(LogEntry logEntry);
     }
 }
