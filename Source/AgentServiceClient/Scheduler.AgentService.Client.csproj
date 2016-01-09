@@ -31,20 +31,21 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AgentServiceClientFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Scheduler.Common.csproj">
+      <Project>{ac1e94ca-b8ff-417c-a332-d49f49c6d8b9}</Project>
+      <Name>Scheduler.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ServiceContracts\Scheduler.ServiceContracts.csproj">
       <Project>{42c4b705-c558-47e4-a7ca-fbd7edf54b08}</Project>
       <Name>Scheduler.ServiceContracts</Name>
