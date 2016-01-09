@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.ServiceContracts"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.SchedulerService", "SchedulerService\Scheduler.SchedulerService.csproj", "{BCA9CB39-06EC-42E0-805B-32BE8901A029}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.SchedulerServiceClient", "SchedulerServiceClient\Scheduler.SchedulerServiceClient.csproj", "{639C51E1-2B2F-4987-B90C-D9AC8B6402CD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.SchedulerService.Client", "SchedulerServiceClient\Scheduler.SchedulerService.Client.csproj", "{639C51E1-2B2F-4987-B90C-D9AC8B6402CD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.DataAccess", "DataAccess\Scheduler.DataAccess.csproj", "{C839F6E8-0A76-4E57-9F24-A3E35EF8799E}"
 EndProject

@@ -56,9 +56,9 @@
       <Project>{fd0050ab-4688-4c5a-bb00-472c67d5abab}</Project>
       <Name>Scheduler.DataContracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SchedulerServiceClient\Scheduler.SchedulerServiceClient.csproj">
+    <ProjectReference Include="..\SchedulerServiceClient\Scheduler.SchedulerService.Client.csproj">
       <Project>{639c51e1-2b2f-4987-b90c-d9ac8b6402cd}</Project>
-      <Name>Scheduler.SchedulerServiceClient</Name>
+      <Name>Scheduler.SchedulerService.Client</Name>
     </ProjectReference>
     <ProjectReference Include="..\ServiceContracts\Scheduler.ServiceContracts.csproj">
       <Project>{42c4b705-c558-47e4-a7ca-fbd7edf54b08}</Project>
