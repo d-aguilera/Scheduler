@@ -13,7 +13,7 @@ namespace Scheduler.AgentService
 {
     public class Agent : IAgent
     {
-        public void Execute(int logEntryId, string shellCommand, string workingDirectory, int scheduleEntryId, int clientId, bool forced)
+        public void Execute(int logEntryId, string shellCommand, string workingDirectory)
         {
             DateTime started = DateTime.UtcNow;
             int? processId = null;

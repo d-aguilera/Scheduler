@@ -78,10 +78,7 @@ namespace Scheduler.SchedulerService
                 agentServiceClient.Execute(
                     logEntryId,
                     scheduleEntry.ShellCommand,
-                    scheduleEntry.WorkingDirectory,
-                    scheduleEntry.Id,
-                    scheduleEntry.ClientId,
-                    forced
+                    scheduleEntry.WorkingDirectory
                     );
             }
             catch (Exception ex)

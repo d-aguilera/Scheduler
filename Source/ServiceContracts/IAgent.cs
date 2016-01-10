@@ -10,6 +10,6 @@ namespace Scheduler.AgentService
     public interface IAgent
     {
         [OperationContract(IsOneWay = true)]
-        void Execute(int logEntryId, string shellCommand, string workingDirectory, int scheduleEntryId, int clientId, bool forced);
+        void Execute(int logEntryId, string shellCommand, string workingDirectory);
     }
 }
