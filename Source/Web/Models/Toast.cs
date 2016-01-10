@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using Scheduler.Common;
+﻿using Scheduler.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,14 +28,14 @@ namespace Scheduler.Web.Models
 
         public string Encrypt()
         {
-            var json = JsonConvert.SerializeObject(this);
+            var json = Helpers.ToJson(this);
             return Helpers.ToBase64(json);
         }
 
         public static Toast Decrypt(string toastToken)
         {
             var json = Helpers.FromBase64(toastToken);
-            return JsonConvert.DeserializeObject<Toast>(json);
+            return Helpers.FromJson<Toast>(json);
         }
     }
 }

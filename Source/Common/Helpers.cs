@@ -46,5 +46,15 @@ namespace Scheduler.Common
         {
             return Encoding.UTF8.GetString(Convert.FromBase64String(encoded));
         }
+
+        public static string ToJson(object obj)
+        {
+            return JsonConvert.SerializeObject(obj);
+        }
+
+        public static T FromJson<T>(string json)
+        {
+            return JsonConvert.DeserializeObject<T>(json);
+        }
     }
 }
