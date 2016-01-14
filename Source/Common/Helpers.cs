@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,17 @@ namespace Scheduler.Common
 {
     public class Helpers
     {
-        public static string GetFullExceptionMessage(string title, Exception ex, IDictionary<string, object> args = null)
+        public static void LogException(string message, string eventLogSource)
+        {
+            EventLog.WriteEntry(eventLogSource, message, EventLogEntryType.Error, 1);
+        }
+
+        public static void LogWarning(string message, string eventLogSource)
+        {
+            EventLog.WriteEntry(eventLogSource, message, EventLogEntryType.Warning, 2);
+        }
+
+        public static string GetFullExceptionMessage(Exception ex, string title, IDictionary<string, object> args = null)
         {
             var sb = new StringBuilder();
             sb.AppendLine(title);

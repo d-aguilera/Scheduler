@@ -1,7 +1,10 @@
-﻿using Scheduler.DataContracts;
+﻿using Scheduler.Common;
+using Scheduler.DataContracts;
 using Scheduler.Web.Models;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Net;
 using System.Web.Mvc;
 
@@ -112,18 +115,39 @@ namespace Scheduler.Web.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult DeleteConfirmed(int id)
         {
-            var set = Context.Set<TEntity>();
-            var entity = set.Find(id);
-            set.Remove(entity);
-            Context.SaveChanges();
+            Toast toast;
 
-            OnDeleteConfirmed(id);
-
-            var toast = new Toast
+            try
             {
-                Title = "Deleted",
-                Type = ToastTypes.Success
-            };
+                var set = Context.Set<TEntity>();
+                var entity = set.Find(id);
+                set.Remove(entity);
+                Context.SaveChanges();
+
+                OnDeleteConfirmed(id);
+
+                toast = new Toast
+                {
+                    Title = "Deleted",
+                    Type = ToastTypes.Success
+                };
+            }
+            catch (Exception ex)
+            {
+                var message = Helpers.GetFullExceptionMessage(ex, "Could not delete the item.", new Dictionary<string, object> {
+                    { "Type", GetType().FullName },
+                    { "id", id },
+                });
+
+                Helpers.LogException(message, EventLogSource);
+
+                toast = new Toast
+                {
+                    Title = "Could not delete the item.",
+                    Message = "See event log for details.",
+                    Type = ToastTypes.Error
+                };
+            }
 
             return RedirectToAction("Index", new { toastToken = toast.Encrypt() });
         }

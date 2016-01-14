@@ -11,6 +11,8 @@ namespace Scheduler.Web.Controllers
 {
     public abstract class IndexControllerBase<TEntity> : Controller where TEntity : Identifiable
     {
+        protected const string EventLogSource = "Scheduler.Web";
+
         private WebContext _dbContext = new WebContext();
 
         protected WebContext Context

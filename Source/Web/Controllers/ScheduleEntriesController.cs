@@ -17,7 +17,6 @@ namespace Scheduler.Web.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         const string BindInclude = "Id,ClientId,CronExpression,ShellCommand,WorkingDirectory,Enabled,Created,CreatedBy,LastUpdated,LastUpdatedBy";
-        const string EventLogSource = "Scheduler.Web";
 
         protected override IEnumerable<ScheduleEntry> IndexSet
         {
@@ -111,13 +110,12 @@ namespace Scheduler.Web.Controllers
             }
             catch (Exception ex)
             {
-                var args = new Dictionary<string, object> {
+                var message = Helpers.GetFullExceptionMessage(ex, "Could not launch execution.", new Dictionary<string, object> {
                     { "id", id },
                     { "ScheduleEntry", scheduleEntry }
-                };
-                var message = Helpers.GetFullExceptionMessage("Could not launch execution.", ex, args);
+                });
 
-                EventLog.WriteEntry(EventLogSource, message, EventLogEntryType.Error, 1);
+                Helpers.LogException(message, EventLogSource);
 
                 toast = new Toast
                 {
@@ -148,8 +146,11 @@ namespace Scheduler.Web.Controllers
             }
             catch (Exception ex)
             {
-                var message = Helpers.GetFullExceptionMessage("Could not contact scheduler service.", ex);
-                EventLog.WriteEntry(EventLogSource, message, EventLogEntryType.Warning, 2);
+                var message = Helpers.GetFullExceptionMessage(ex, "Could not contact scheduler service.", new Dictionary<string, object> {
+                    { "Operation", "Reload" },
+                });
+
+                Helpers.LogWarning(message, EventLogSource);
             }
         }
     }

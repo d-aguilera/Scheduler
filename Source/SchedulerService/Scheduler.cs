@@ -13,7 +13,7 @@ using System.ServiceProcess;
 
 namespace Scheduler.SchedulerService
 {
-    public class Scheduler : IScheduler
+    public class Scheduler : IScheduler, IDisposable
     {
         const string EventLogSource = "Scheduler.SchedulerService";
 
@@ -83,14 +83,13 @@ namespace Scheduler.SchedulerService
             }
             catch (Exception ex)
             {
-                var args = new Dictionary<string, object> {
+                var message = Helpers.GetFullExceptionMessage(ex, "Could not contact agent service.", new Dictionary<string, object> {
                     { "scheduleEntry", scheduleEntry },
                     { "client", client },
                     { "agentServiceClient", agentServiceClient },
-                };
-                var message = Helpers.GetFullExceptionMessage("Could not execute command.", ex, args);
+                });
 
-                EventLog.WriteEntry(EventLogSource, message, EventLogEntryType.Error, 1);
+                Helpers.LogException(message, EventLogSource);
 
                 UpdateLogEntry(logEntryId, null, null, null, null, null, message);
 
@@ -131,7 +130,7 @@ namespace Scheduler.SchedulerService
             }
             catch (Exception ex)
             {
-                var args = new Dictionary<string, object> {
+                var message = Helpers.GetFullExceptionMessage(ex, "Could not create log entry.", new Dictionary<string, object> {
                     { "shellCommand", shellCommand },
                     { "workingDirectory", workingDirectory },
                     { "scheduleEntryId", scheduleEntryId },
@@ -143,10 +142,9 @@ namespace Scheduler.SchedulerService
                     { "consoleOut", consoleOut },
                     { "errorOut", errorOut },
                     { "forced", forced }
-                };
-                var message = Helpers.GetFullExceptionMessage("Could not create log entry.", ex, args);
+                });
 
-                EventLog.WriteEntry(EventLogSource, message, EventLogEntryType.Error, 1);
+                Helpers.LogException(message, EventLogSource);
 
                 throw;
             }
@@ -177,7 +175,7 @@ namespace Scheduler.SchedulerService
             }
             catch (Exception ex)
             {
-                var args = new Dictionary<string, object> {
+                var message = Helpers.GetFullExceptionMessage(ex, "Could not update log entry.", new Dictionary<string, object> {
                     { "logEntryId", logEntryId },
                     { "started", started },
                     { "finished", finished },
@@ -185,10 +183,9 @@ namespace Scheduler.SchedulerService
                     { "processId", processId },
                     { "consoleOut", consoleOut },
                     { "errorOut", errorOut }
-                };
-                var message = Helpers.GetFullExceptionMessage("Could not update log entry.", ex, args);
+                });
 
-                EventLog.WriteEntry(EventLogSource, message, EventLogEntryType.Error, 1);
+                Helpers.LogException(message, EventLogSource);
 
                 throw;
             }
@@ -198,17 +195,50 @@ namespace Scheduler.SchedulerService
         {
             const int CronReload = 1;
 
+            string cronMachine = null;
+
             try
             {
-                var cronMachine = ConfigurationManager.AppSettings["Scheduler.CronService.MachineName"] ?? "localhost";
+                cronMachine = ConfigurationManager.AppSettings["Scheduler.CronService.MachineName"] ?? "localhost";
                 var sc = new ServiceController("Scheduler.CronService", cronMachine);
                 sc.ExecuteCommand(CronReload);
             }
             catch (Exception ex)
             {
-                var message = Helpers.GetFullExceptionMessage("Could not contact cron service.", ex);
-                EventLog.WriteEntry(EventLogSource, message, EventLogEntryType.Warning, 2);
+                var message = Helpers.GetFullExceptionMessage(ex, "Could not contact cron service.", new Dictionary<string, object> {
+                    { "Operation", "Reload" },
+                    { "cronMachine", cronMachine },
+                });
+
+                Helpers.LogWarning(message, EventLogSource);
             }
         }
+
+        #region IDisposable
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (null != _dbContext)
+                {
+                    _dbContext.Dispose();
+                    _dbContext = null;
+                }
+            }
+        }
+
+        ~Scheduler()
+        {
+            Dispose(false);
+        }
+
+        #endregion
     }
 }
