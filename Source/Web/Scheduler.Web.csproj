@@ -209,6 +209,7 @@
     <Content Include="Views\Clients\DetailsPartial.cshtml" />
     <Content Include="Views\LogEntries\DetailsPartial.cshtml" />
     <Content Include="Views\ScheduleEntries\DetailsPartial.cshtml" />
+    <Content Include="Secrets.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
