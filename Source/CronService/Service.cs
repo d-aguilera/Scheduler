@@ -43,7 +43,9 @@ namespace Scheduler.CronService
             IEnumerable<ScheduleEntry> scheduleEntries;
             using (var context = new WebContext())
             {
-                scheduleEntries = context.ScheduleEntries.ToList();
+                scheduleEntries = context.ScheduleEntries
+                    .Where(se => se.Enabled)
+                    .ToList();
             }
 
             foreach (var scheduleEntry in scheduleEntries)
