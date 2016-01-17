@@ -15,12 +15,10 @@ namespace Scheduler.AgentService.Client
         public static IAgent CreateChannel(string networkName, int? port, string virtualDirectory)
         {
             var factory = new ChannelFactory<IAgent>("AgentService");
-            factory.Credentials.UserName.UserName = Helpers.FromBase64(ConfigurationManager.AppSettings["Scheduler.Basic.UserName"]);
-            factory.Credentials.UserName.Password = Helpers.FromBase64(ConfigurationManager.AppSettings["Scheduler.Basic.Password"]);
 
             var uriString = string.Format(
                 CultureInfo.InvariantCulture,
-                "http://{0}{1}{2}/Scheduler/Agent.svc",
+                "https://{0}{1}{2}/Scheduler/cert/Agent.svc",
                 networkName,
                 null == port ? null : (":" + Convert.ToString(port, CultureInfo.InvariantCulture)),
                 string.IsNullOrWhiteSpace(virtualDirectory) ? null : ("/" + virtualDirectory.Trim())
