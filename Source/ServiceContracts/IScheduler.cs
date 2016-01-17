@@ -10,10 +10,10 @@ namespace Scheduler.SchedulerService
     public interface IScheduler
     {
         [OperationContract]
-        void Execute(ScheduleEntry scheduleEntry, bool forced);
+        void ExecuteInteractive(int scheduleEntryId, string operatorName);
 
         [OperationContract]
-        void ExecuteMany(IEnumerable<int> scheduleEntryIds, bool forced);
+        void ExecuteMany(IEnumerable<int> scheduleEntryIds);
 
         [OperationContract]
         void UpdateLogEntry(int logEntryId, DateTime? started, DateTime? finished, int? exitCode, int? processId, string consoleOut, string errorOut);

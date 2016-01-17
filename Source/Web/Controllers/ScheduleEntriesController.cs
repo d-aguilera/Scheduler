@@ -91,15 +91,13 @@ namespace Scheduler.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ExecuteConfirmed(int id)
         {
-            var scheduleEntry = Context.Set<ScheduleEntry>().Find(id);
-
             var schedulerServiceClient = SchedulerServiceClientFactory.CreateChannel();
 
             Toast toast;
 
             try
             {
-                schedulerServiceClient.Execute(scheduleEntry, true);
+                schedulerServiceClient.ExecuteInteractive(id, User.Identity.Name);
 
                 toast = new Toast
                 {
@@ -112,7 +110,6 @@ namespace Scheduler.Web.Controllers
             {
                 var message = Helpers.GetFullExceptionMessage(ex, "Could not launch execution.", new Dictionary<string, object> {
                     { "id", id },
-                    { "ScheduleEntry", scheduleEntry }
                 });
 
                 Helpers.LogException(message, EventLogSource);

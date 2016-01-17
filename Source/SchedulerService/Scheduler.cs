@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Permissions;
 using System.ServiceModel;
 using System.ServiceProcess;
 
@@ -27,7 +28,7 @@ namespace Scheduler.SchedulerService
             }
         }
 
-        public void ExecuteMany(IEnumerable<int> scheduleEntryIds, bool forced)
+        public void ExecuteMany(IEnumerable<int> scheduleEntryIds)
         {
             if (null == scheduleEntryIds)
                 return;
@@ -36,36 +37,41 @@ namespace Scheduler.SchedulerService
             {
                 try
                 {
-                    var scheduleEntry = Context.ScheduleEntries.Find(scheduleEntryId);
-                    Execute(scheduleEntry, forced);
+                    ExecuteOne(scheduleEntryId);
                 }
                 catch
                 {
-                    // Should continue. Exception has been logged in Execute(ScheduleEntry, bool)
+                    // Should continue. Exception has been logged in ExecuteOne
                 }
             }
         }
 
-        public void Execute(ScheduleEntry scheduleEntry, bool forced)
+        public void ExecuteInteractive(int scheduleEntryId, string operatorName)
         {
-            if (null == scheduleEntry)
-                return;
+            ExecuteOne(scheduleEntryId, operatorName);
+        }
+
+        void ExecuteOne(int scheduleEntryId, string operatorName = null)
+        {
+            var scheduleEntry = Context.ScheduleEntries
+                .Include(se => se.Client)
+                .Single(se => se.Id == scheduleEntryId);
 
             int logEntryId = CreateLogEntry(
                 scheduleEntry.ShellCommand,
                 scheduleEntry.WorkingDirectory,
                 scheduleEntry.Id,
                 scheduleEntry.ClientId,
+                operatorName,
                 null,
                 null,
                 null,
                 null,
                 null,
-                null,
-                forced
+                null
                 );
 
-            var client = Context.Set<Client>().Find(scheduleEntry.ClientId);
+            var client = scheduleEntry.Client;
 
             var agentServiceClient = AgentServiceClientFactory.CreateChannel(
                 client.NetworkName,
@@ -95,12 +101,26 @@ namespace Scheduler.SchedulerService
 
                 throw;
             }
+            finally
+            {
+                ((IDisposable)agentServiceClient).Dispose();
+            }
         }
 
-        int CreateLogEntry(string shellCommand, string workingDirectory, int scheduleEntryId, int clientId, DateTime? started, DateTime? finished, int? exitCode, int? processId, string consoleOut, string errorOut, bool forced)
+        int CreateLogEntry(string shellCommand, string workingDirectory, int scheduleEntryId, int clientId, string operatorName, DateTime? started, DateTime? finished, int? exitCode, int? processId, string consoleOut, string errorOut)
         {
-            var sc = ServiceSecurityContext.Current;
-            var createdBy = null == sc ? "?" : sc.PrimaryIdentity.Name;
+            bool forced;
+            string createdBy;
+            if (string.IsNullOrEmpty(operatorName))
+            {
+                createdBy = ServiceSecurityContext.Current.PrimaryIdentity.Name;
+                forced = false;
+            }
+            else
+            {
+                createdBy = operatorName;
+                forced = true;
+            }
 
             started = started != null && started.HasValue ? started.Value.ToUniversalTime() : started;
             finished = finished != null && finished.HasValue ? finished.Value.ToUniversalTime() : finished;
