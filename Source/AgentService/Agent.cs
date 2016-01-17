@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Security.Permissions;
 using System.ServiceModel;
 using System.Text;
 
@@ -13,6 +14,7 @@ namespace Scheduler.AgentService
 {
     public class Agent : IAgent
     {
+        [PrincipalPermission(SecurityAction.Demand, Name = "CN=Scheduler Service; 0934C34632B2A5BF21E21EAD970992B63FAA4F3C")]
         public void Execute(int logEntryId, string shellCommand, string workingDirectory)
         {
             DateTime started = DateTime.UtcNow;
