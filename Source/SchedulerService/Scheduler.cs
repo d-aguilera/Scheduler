@@ -2,6 +2,7 @@
 using Scheduler.Common;
 using Scheduler.DataAccess;
 using Scheduler.DataContracts;
+using Scheduler.ServiceContracts;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -10,6 +11,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security.Permissions;
 using System.ServiceModel;
+using System.ServiceModel.Description;
 using System.ServiceProcess;
 
 namespace Scheduler.SchedulerService
@@ -26,6 +28,16 @@ namespace Scheduler.SchedulerService
             {
                 return _dbContext;
             }
+        }
+
+        public static void Configure(ServiceConfiguration config)
+        {
+            var binding = new SchedulerBinding();
+            var address = new Uri("cert/Scheduler.svc", UriKind.Relative);
+            config.AddServiceEndpoint(typeof(IScheduler), binding, address);
+            config.Description.Behaviors.Add(new ServiceMetadataBehavior { HttpsGetEnabled = true });
+            config.Description.Behaviors.Add(new ServiceDebugBehavior { IncludeExceptionDetailInFaults = true });
+            config.Description.Behaviors.Add(new ServiceAuthorizationBehavior { PrincipalPermissionMode = PrincipalPermissionMode.UseAspNetRoles });
         }
 
         [PrincipalPermission(SecurityAction.Demand, Name = "CN=Scheduler Cron Service; E4EEE6EF0CE98C75BF5E3371DC074C75F5BA6CDF")]

@@ -1,5 +1,6 @@
 ﻿using Scheduler.DataContracts;
 using Scheduler.SchedulerService.Client;
+using Scheduler.ServiceContracts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,12 +9,23 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 using System.ServiceModel;
+using System.ServiceModel.Description;
 using System.Text;
 
 namespace Scheduler.AgentService
 {
     public class Agent : IAgent
     {
+        public static void Configure(ServiceConfiguration config)
+        {
+            var binding = new SchedulerBinding();
+            var address = new Uri("cert/Agent.svc", UriKind.Relative);
+            config.AddServiceEndpoint(typeof(IAgent), binding, address);
+            config.Description.Behaviors.Add(new ServiceMetadataBehavior { HttpsGetEnabled = true });
+            config.Description.Behaviors.Add(new ServiceDebugBehavior { IncludeExceptionDetailInFaults = true });
+            config.Description.Behaviors.Add(new ServiceAuthorizationBehavior { PrincipalPermissionMode = PrincipalPermissionMode.UseAspNetRoles });
+        }
+
         [PrincipalPermission(SecurityAction.Demand, Name = "CN=Scheduler Service; 0934C34632B2A5BF21E21EAD970992B63FAA4F3C")]
         public void Execute(int logEntryId, string shellCommand, string workingDirectory)
         {
