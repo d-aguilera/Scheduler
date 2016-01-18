@@ -141,11 +141,7 @@ namespace Scheduler.CronService
 
         static bool CronPartMatches(string cronPart, int target)
         {
-            if (cronPart == "*")
-                return true;
-            if (int.Parse(cronPart) == target)
-                return true;
-            return false;
+            return cronPart == "*" || int.Parse(cronPart) == target;
         }
     }
 }
