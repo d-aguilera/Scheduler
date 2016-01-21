@@ -29,10 +29,10 @@ namespace Scheduler.AgentService
         [PrincipalPermission(SecurityAction.Demand, Name = "CN=Scheduler Service; 0934C34632B2A5BF21E21EAD970992B63FAA4F3C")]
         public void Execute(int logEntryId, string shellCommand, string workingDirectory)
         {
-            DateTime started = DateTime.UtcNow;
-            int? processId = null;
-            string consoleOut = string.Empty;
-            string errorOut = string.Empty;
+            var started = DateTime.UtcNow;
+            var processId = default(int?);
+            var consoleOut = string.Empty;
+            var errorOut = string.Empty;
 
             try
             {
@@ -67,8 +67,11 @@ namespace Scheduler.AgentService
 
         void UpdateLogEntry(int logEntryId, DateTime started, DateTime finished, int? exitCode, int? processId, string consoleOut, string errorOut)
         {
-            var channel = SchedulerServiceClientFactory.CreateChannel();
-            channel.UpdateLogEntry(logEntryId, started, finished, exitCode, processId, consoleOut, errorOut);
+            using (var factory = new SchedulerServiceClientFactory())
+            {
+                var channel = factory.CreateChannel();
+                channel.UpdateLogEntry(logEntryId, started, finished, exitCode, processId, consoleOut, errorOut);
+            }
         }
     }
 }

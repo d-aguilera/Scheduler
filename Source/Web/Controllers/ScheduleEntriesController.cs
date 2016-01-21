@@ -91,13 +91,15 @@ namespace Scheduler.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ExecuteConfirmed(int id)
         {
-            var schedulerServiceClient = SchedulerServiceClientFactory.CreateChannel();
-
             Toast toast;
 
             try
             {
-                schedulerServiceClient.ExecuteInteractive(id, User.Identity.Name);
+                using (var factory = new SchedulerServiceClientFactory())
+                {
+                    var channel = factory.CreateChannel();
+                    channel.ExecuteInteractive(id, User.Identity.Name);
+                }
 
                 toast = new Toast
                 {
@@ -138,8 +140,11 @@ namespace Scheduler.Web.Controllers
         {
             try
             {
-                var channel = SchedulerServiceClientFactory.CreateChannel();
-                channel.Reload();
+                using (var factory = new SchedulerServiceClientFactory())
+                {
+                    var channel = factory.CreateChannel();
+                    channel.Reload();
+                }
             }
             catch (Exception ex)
             {

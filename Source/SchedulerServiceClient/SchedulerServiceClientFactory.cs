@@ -7,14 +7,10 @@ using System.ServiceModel;
 
 namespace Scheduler.SchedulerService.Client
 {
-    public class SchedulerServiceClientFactory
+    public class SchedulerServiceClientFactory : SchedulerFactory<IScheduler>
     {
-        public static IScheduler CreateChannel()
+        public SchedulerServiceClientFactory() : base(GetEndpointAddress())
         {
-            var address = GetEndpointAddress();
-            var factory = new SchedulerFactory<IScheduler>(address);
-            var channel = factory.CreateChannel();
-            return channel;
         }
 
         static EndpointAddress GetEndpointAddress()

@@ -28,8 +28,11 @@ namespace Scheduler.CronService
 
             if (_scheduleEntryIds.Length > 0)
             {
-                var channel = SchedulerServiceClientFactory.CreateChannel();
-                channel.ExecuteMany(_scheduleEntryIds);
+                using (var factory = new SchedulerServiceClientFactory())
+                {
+                    var channel = factory.CreateChannel();
+                    channel.ExecuteMany(_scheduleEntryIds);
+                }
             }
 
             var nextCheck = NextExactMinute(lastCheck);

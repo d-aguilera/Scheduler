@@ -71,7 +71,7 @@ namespace Scheduler.SchedulerService
                 .Include(se => se.Client)
                 .Single(se => se.Id == scheduleEntryId);
 
-            int logEntryId = CreateLogEntry(
+            var logEntryId = CreateLogEntry(
                 scheduleEntry.ShellCommand,
                 scheduleEntry.WorkingDirectory,
                 scheduleEntry.Id,
@@ -87,26 +87,23 @@ namespace Scheduler.SchedulerService
 
             var client = scheduleEntry.Client;
 
-            var agentServiceClient = AgentServiceClientFactory.CreateChannel(
-                client.NetworkName,
-                client.AgentPort,
-                client.AgentVirtualDirectory
-                );
-
             try
             {
-                agentServiceClient.Execute(
-                    logEntryId,
-                    scheduleEntry.ShellCommand,
-                    scheduleEntry.WorkingDirectory
+                using (var factory = new AgentServiceClientFactory(client.NetworkName, client.AgentPort, client.AgentVirtualDirectory))
+                {
+                    var channel = factory.CreateChannel();
+                    channel.Execute(
+                        logEntryId,
+                        scheduleEntry.ShellCommand,
+                        scheduleEntry.WorkingDirectory
                     );
+                }
             }
             catch (Exception ex)
             {
                 var message = Helpers.GetFullExceptionMessage(ex, "Could not contact agent service.", new Dictionary<string, object> {
                     { "scheduleEntry", scheduleEntry },
                     { "client", client },
-                    { "agentServiceClient", agentServiceClient },
                 });
 
                 Helpers.LogException(message, EventLogSource);
@@ -114,10 +111,6 @@ namespace Scheduler.SchedulerService
                 UpdateLogEntry(logEntryId, null, null, null, null, null, message);
 
                 throw;
-            }
-            finally
-            {
-                ((IDisposable)agentServiceClient).Dispose();
             }
         }
 

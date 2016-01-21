@@ -7,14 +7,11 @@ using System.ServiceModel;
 
 namespace Scheduler.AgentService.Client
 {
-    public class AgentServiceClientFactory
+    public class AgentServiceClientFactory : SchedulerFactory<IAgent>
     {
-        public static IAgent CreateChannel(string networkName, int? port, string virtualDirectory)
+        public AgentServiceClientFactory(string networkName, int? port, string virtualDirectory)
+            : base(GetEndpointAddress(networkName, port, virtualDirectory))
         {
-            var address = GetEndpointAddress(networkName, port, virtualDirectory);
-            var factory = new SchedulerFactory<IAgent>(address);
-            var channel = factory.CreateChannel();
-            return channel;
         }
 
         static EndpointAddress GetEndpointAddress(string networkName, int? port, string virtualDirectory)
