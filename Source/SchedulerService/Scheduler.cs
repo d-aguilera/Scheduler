@@ -220,7 +220,7 @@ namespace Scheduler.SchedulerService
 
         public void Reload()
         {
-            const int CronReload = 1;
+            const int CronReload = 201;
 
             string cronMachine = null;
 

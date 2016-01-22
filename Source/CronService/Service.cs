@@ -118,7 +118,7 @@ namespace Scheduler.CronService
 
         protected override void OnCustomCommand(int command)
         {
-            const int CronReload = 1;
+            const int CronReload = 201;
 
             base.OnCustomCommand(command);
 
