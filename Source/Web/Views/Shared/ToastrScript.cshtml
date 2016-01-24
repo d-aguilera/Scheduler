@@ -23,7 +23,7 @@
             "hideMethod": "fadeOut"
         };
 
-        toastr["@type"]('@Html.Raw(message)', '@Html.Raw(title)');
+        toastr["@type"]('@Html.Raw(HttpUtility.JavaScriptStringEncode(message))', '@Html.Raw(HttpUtility.JavaScriptStringEncode(title))');
     });
     </script>
 }
