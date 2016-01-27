@@ -40,7 +40,7 @@ namespace Scheduler.SchedulerService
             config.Description.Behaviors.Add(new ServiceAuthorizationBehavior { PrincipalPermissionMode = PrincipalPermissionMode.UseAspNetRoles });
         }
 
-        [PrincipalPermission(SecurityAction.Demand, Name = "CN=Scheduler Cron Service; E4EEE6EF0CE98C75BF5E3371DC074C75F5BA6CDF")]
+        [PrincipalPermission(SecurityAction.Demand, Name = PrincipalNames.CronService)]
         public void ExecuteMany(IEnumerable<int> scheduleEntryIds)
         {
             if (null == scheduleEntryIds)
@@ -59,7 +59,7 @@ namespace Scheduler.SchedulerService
             }
         }
 
-        [PrincipalPermission(SecurityAction.Demand, Name = "CN=Scheduler Web; AB685B1108082D37671E44704C63E54E7916EFB4")]
+        [PrincipalPermission(SecurityAction.Demand, Name = PrincipalNames.Web)]
         public void ExecuteInteractive(int scheduleEntryId, string operatorName)
         {
             ExecuteOne(scheduleEntryId, operatorName);

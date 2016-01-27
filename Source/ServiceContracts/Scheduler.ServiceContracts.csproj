@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="IAgent.cs" />
     <Compile Include="IScheduler.cs" />
+    <Compile Include="PrincipalNames.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SchedulerBinding.cs" />
     <Compile Include="SchedulerFactory.cs" />

@@ -26,7 +26,7 @@ namespace Scheduler.AgentService
             config.Description.Behaviors.Add(new ServiceAuthorizationBehavior { PrincipalPermissionMode = PrincipalPermissionMode.UseAspNetRoles });
         }
 
-        [PrincipalPermission(SecurityAction.Demand, Name = "CN=Scheduler Service; 0934C34632B2A5BF21E21EAD970992B63FAA4F3C")]
+        [PrincipalPermission(SecurityAction.Demand, Name = PrincipalNames.SchedulerService)]
         public void Execute(int logEntryId, string shellCommand, string workingDirectory)
         {
             var started = DateTime.UtcNow;
