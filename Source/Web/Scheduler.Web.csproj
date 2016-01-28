@@ -211,6 +211,8 @@
     <Content Include="Views\Clients\DetailsPartial.cshtml" />
     <Content Include="Views\LogEntries\DetailsPartial.cshtml" />
     <Content Include="Views\ScheduleEntries\DetailsPartial.cshtml" />
+    <Content Include="Views\ScheduleEntries\EditPartial.cshtml" />
+    <Content Include="Views\Clients\EditPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
