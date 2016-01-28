@@ -1,6 +1,7 @@
 ﻿using Scheduler.DataAccess;
 using Scheduler.DataContracts;
 using Scheduler.SchedulerService.Client;
+using Scheduler.ServiceContracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,8 +31,10 @@ namespace Scheduler.CronService
             {
                 using (var factory = new SchedulerServiceClientFactory())
                 {
-                    var channel = factory.CreateChannel();
-                    channel.ExecuteMany(_scheduleEntryIds);
+                    WcfHelpers.Using(factory, channel =>
+                    {
+                        channel.ExecuteMany(_scheduleEntryIds);
+                    });
                 }
             }
 

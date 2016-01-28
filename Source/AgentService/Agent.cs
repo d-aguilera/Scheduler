@@ -1,16 +1,13 @@
-﻿using Scheduler.DataContracts;
-using Scheduler.SchedulerService.Client;
+﻿using Scheduler.SchedulerService.Client;
 using Scheduler.ServiceContracts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Security.Permissions;
 using System.ServiceModel;
 using System.ServiceModel.Description;
-using System.Text;
 
 namespace Scheduler.AgentService
 {
@@ -69,8 +66,10 @@ namespace Scheduler.AgentService
         {
             using (var factory = new SchedulerServiceClientFactory())
             {
-                var channel = factory.CreateChannel();
-                channel.UpdateLogEntry(logEntryId, started, finished, exitCode, processId, consoleOut, errorOut);
+                WcfHelpers.Using(factory, channel =>
+                {
+                    channel.UpdateLogEntry(logEntryId, started, finished, exitCode, processId, consoleOut, errorOut);
+                });
             }
         }
     }

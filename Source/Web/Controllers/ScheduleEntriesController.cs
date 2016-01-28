@@ -1,11 +1,11 @@
 ﻿using Scheduler.Common;
 using Scheduler.DataContracts;
 using Scheduler.SchedulerService.Client;
+using Scheduler.ServiceContracts;
 using Scheduler.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -97,8 +97,10 @@ namespace Scheduler.Web.Controllers
             {
                 using (var factory = new SchedulerServiceClientFactory())
                 {
-                    var channel = factory.CreateChannel();
-                    channel.ExecuteInteractive(id, User.Identity.Name);
+                    WcfHelpers.Using(factory, channel =>
+                    {
+                        channel.ExecuteInteractive(id, User.Identity.Name);
+                    });
                 }
 
                 toast = new Toast
@@ -142,8 +144,10 @@ namespace Scheduler.Web.Controllers
             {
                 using (var factory = new SchedulerServiceClientFactory())
                 {
-                    var channel = factory.CreateChannel();
-                    channel.Reload();
+                    WcfHelpers.Using(factory, channel =>
+                    {
+                        channel.Reload();
+                    });
                 }
             }
             catch (Exception ex)

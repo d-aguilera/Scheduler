@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
-using System.Diagnostics;
 using System.Linq;
 using System.Security.Permissions;
 using System.ServiceModel;
@@ -16,19 +15,9 @@ using System.ServiceProcess;
 
 namespace Scheduler.SchedulerService
 {
-    public class Scheduler : IScheduler, IDisposable
+    public class Scheduler : IScheduler
     {
         const string EventLogSource = "Scheduler.SchedulerService";
-
-        private WebContext _dbContext = new WebContext();
-
-        WebContext Context
-        {
-            get
-            {
-                return _dbContext;
-            }
-        }
 
         public static void Configure(ServiceConfiguration config)
         {
@@ -67,22 +56,21 @@ namespace Scheduler.SchedulerService
 
         void ExecuteOne(int scheduleEntryId, string operatorName = null)
         {
-            var scheduleEntry = Context.ScheduleEntries
-                .Include(se => se.Client)
-                .Single(se => se.Id == scheduleEntryId);
+            ScheduleEntry scheduleEntry;
+
+            using (var context = new WebContext())
+            {
+                scheduleEntry = context.ScheduleEntries
+                    .Include(se => se.Client)
+                    .Single(se => se.Id == scheduleEntryId);
+            }
 
             var logEntryId = CreateLogEntry(
                 scheduleEntry.ShellCommand,
                 scheduleEntry.WorkingDirectory,
                 scheduleEntry.Id,
                 scheduleEntry.ClientId,
-                operatorName,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+                operatorName
                 );
 
             var client = scheduleEntry.Client;
@@ -91,12 +79,14 @@ namespace Scheduler.SchedulerService
             {
                 using (var factory = new AgentServiceClientFactory(client.NetworkName, client.AgentPort, client.AgentVirtualDirectory))
                 {
-                    var channel = factory.CreateChannel();
-                    channel.Execute(
-                        logEntryId,
-                        scheduleEntry.ShellCommand,
-                        scheduleEntry.WorkingDirectory
-                    );
+                    WcfHelpers.Using(factory, channel =>
+                    {
+                        channel.Execute(
+                            logEntryId,
+                            scheduleEntry.ShellCommand,
+                            scheduleEntry.WorkingDirectory
+                        );
+                    });
                 }
             }
             catch (Exception ex)
@@ -114,7 +104,7 @@ namespace Scheduler.SchedulerService
             }
         }
 
-        int CreateLogEntry(string shellCommand, string workingDirectory, int scheduleEntryId, int clientId, string operatorName, DateTime? started, DateTime? finished, int? exitCode, int? processId, string consoleOut, string errorOut)
+        int CreateLogEntry(string shellCommand, string workingDirectory, int scheduleEntryId, int clientId, string operatorName, DateTime? started = null, DateTime? finished = null, int? exitCode = null, int? processId = null, string consoleOut = null, string errorOut = null)
         {
             bool forced;
             string createdBy;
@@ -151,9 +141,12 @@ namespace Scheduler.SchedulerService
                     CreatedBy = createdBy,
                 };
 
-                Context.Set<LogEntry>().Add(logEntry);
-                Context.SaveChanges();
-                return logEntry.Id;
+                using (var context = new WebContext())
+                {
+                    context.Set<LogEntry>().Add(logEntry);
+                    context.SaveChanges();
+                    return logEntry.Id;
+                }
             }
             catch (Exception ex)
             {
@@ -187,18 +180,21 @@ namespace Scheduler.SchedulerService
 
             try
             {
-                var logEntry = Context.Set<LogEntry>().Find(logEntryId);
-                logEntry.Started = started;
-                logEntry.Finished = finished;
-                logEntry.ExitCode = exitCode;
-                logEntry.ProcessId = processId;
-                logEntry.ConsoleOut = consoleOut;
-                logEntry.ErrorOut = errorOut;
-                logEntry.LastUpdated = DateTime.UtcNow;
-                logEntry.LastUpdatedBy = lastUpdatedBy;
+                using (var context = new WebContext())
+                {
+                    var logEntry = context.Set<LogEntry>().Find(logEntryId);
+                    logEntry.Started = started;
+                    logEntry.Finished = finished;
+                    logEntry.ExitCode = exitCode;
+                    logEntry.ProcessId = processId;
+                    logEntry.ConsoleOut = consoleOut;
+                    logEntry.ErrorOut = errorOut;
+                    logEntry.LastUpdated = DateTime.UtcNow;
+                    logEntry.LastUpdatedBy = lastUpdatedBy;
 
-                Context.Entry(logEntry).State = EntityState.Modified;
-                Context.SaveChanges();
+                    context.Entry(logEntry).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
             }
             catch (Exception ex)
             {
@@ -240,32 +236,5 @@ namespace Scheduler.SchedulerService
                 Helpers.LogWarning(message, EventLogSource);
             }
         }
-
-        #region IDisposable
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (null != _dbContext)
-                {
-                    _dbContext.Dispose();
-                    _dbContext = null;
-                }
-            }
-        }
-
-        ~Scheduler()
-        {
-            Dispose(false);
-        }
-
-        #endregion
     }
 }
