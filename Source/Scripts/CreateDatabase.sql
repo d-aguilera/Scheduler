@@ -90,9 +90,9 @@ CREATE TABLE [dbo].[Clients](
 	[AgentPort] [int] NULL,
 	[AgentVirtualDirectory] [varchar](100) NULL,
 	[Created] [datetime] NOT NULL,
-	[CreatedBy] [nvarchar](50) NOT NULL,
+	[CreatedBy] [nvarchar](100) NOT NULL,
 	[LastUpdated] [datetime] NULL,
-	[LastUpdatedBy] [nvarchar](50) NULL,
+	[LastUpdatedBy] [nvarchar](100) NULL,
  CONSTRAINT [PK_Clients] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -122,9 +122,9 @@ CREATE TABLE [dbo].[ScheduleEntries](
 	[WorkingDirectory] [nvarchar](500) NULL,
 	[Enabled] [bit] NOT NULL,
 	[Created] [datetime] NOT NULL,
-	[CreatedBy] [nvarchar](50) NOT NULL,
+	[CreatedBy] [nvarchar](100) NOT NULL,
 	[LastUpdated] [datetime] NULL,
-	[LastUpdatedBy] [nvarchar](50) NULL,
+	[LastUpdatedBy] [nvarchar](100) NULL,
  CONSTRAINT [PK_ScheduleEntries] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -158,9 +158,9 @@ CREATE TABLE [dbo].[LogEntries](
 	[ErrorOut] [nvarchar](max) NULL,
 	[Forced] [bit] NOT NULL,
 	[Created] [datetime] NOT NULL,
-	[CreatedBy] [nvarchar](50) NOT NULL,
+	[CreatedBy] [nvarchar](100) NOT NULL,
 	[LastUpdated] [datetime] NULL,
-	[LastUpdatedBy] [nvarchar](50) NULL,
+	[LastUpdatedBy] [nvarchar](100) NULL,
  CONSTRAINT [PK_LogEntries] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
