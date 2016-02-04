@@ -18,16 +18,6 @@ namespace Scheduler.ServiceContracts
                 channel = factory.CreateChannel();
                 action(channel);
             }
-            catch (CommunicationException)
-            {
-            }
-            catch (TimeoutException)
-            {
-            }
-            catch (Exception)
-            {
-                throw;
-            }
             finally
             {
                 CloseOrAbortServiceChannel((ICommunicationObject)channel);

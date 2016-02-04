@@ -33,12 +33,32 @@ namespace Scheduler.CronService
 
             if (_scheduleEntryIds.Length > 0)
             {
-                using (var factory = new SchedulerServiceClientFactory())
+                try
                 {
-                    WcfHelpers.Using(factory, channel =>
+                    using (var factory = new SchedulerServiceClientFactory())
                     {
-                        channel.ExecuteMany(_scheduleEntryIds);
+                        WcfHelpers.Using(factory, channel =>
+                        {
+                            channel.ExecuteMany(_scheduleEntryIds);
+                        });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    var message = Helpers.GetFullExceptionMessage(ex, "Could not contact scheduler service.", new Dictionary<string, object> {
+                        { "Entries", _scheduleEntryIds },
+                        { "Data", ex.Data },
+                        { "HResult", ex.HResult },
+                        { "Source", ex.Source },
                     });
+                    Helpers.LogException(message, EventLogSource);
+
+                    if (Environment.UserInteractive)
+                    {
+                        ShowError(ex.Message);
+                    }
+
+                    return;
                 }
             }
 
@@ -69,11 +89,7 @@ namespace Scheduler.CronService
 
                 if (Environment.UserInteractive)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Error.Write("[ERROR] ");
-                    Console.ResetColor();
-                    Console.Error.WriteLine(ex.Message);
-                    Console.Error.WriteLine("See event log for details.");
+                    ShowError(ex.Message);
                 }
 
                 return;
@@ -175,6 +191,15 @@ namespace Scheduler.CronService
         static bool CronPartMatches(string cronPart, int target)
         {
             return cronPart == "*" || int.Parse(cronPart) == target;
+        }
+
+        static void ShowError(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Error.Write("[ERROR] ");
+            Console.ResetColor();
+            Console.Error.WriteLine(message);
+            Console.Error.WriteLine("See event log for details.");
         }
     }
 }
