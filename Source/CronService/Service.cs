@@ -1,9 +1,11 @@
-﻿using Scheduler.DataAccess;
+﻿using Scheduler.Common;
+using Scheduler.DataAccess;
 using Scheduler.DataContracts;
 using Scheduler.SchedulerService.Client;
 using Scheduler.ServiceContracts;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.ServiceProcess;
 using System.Timers;
@@ -12,6 +14,8 @@ namespace Scheduler.CronService
 {
     public partial class Service : ServiceBase
     {
+        const string EventLogSource = "Scheduler.CronService";
+
         private Timer _timer = new Timer();
         private Timer _firstCheckTimer = new Timer();
         private int[] _scheduleEntryIds = new int[0];
@@ -44,15 +48,38 @@ namespace Scheduler.CronService
 
         void Reload(DateTime nextCheck)
         {
-            var newScheduleEntryIds = new List<int>();
-
             IEnumerable<ScheduleEntry> scheduleEntries;
-            using (var context = new WebContext())
+
+            try
             {
-                scheduleEntries = context.ScheduleEntries
-                    .Where(se => se.Enabled)
-                    .ToList();
+                using (var context = new WebContext())
+                    scheduleEntries = context.ScheduleEntries
+                        .Where(se => se.Enabled)
+                        .ToList();
             }
+            catch (DbException ex)
+            {
+                var message = Helpers.GetFullExceptionMessage(ex, "Could not retrieve schedule entries from database.", new Dictionary<string, object> {
+                    { "Data", ex.Data },
+                    { "ErrorCode", ex.ErrorCode },
+                    { "HResult", ex.HResult },
+                    { "Source", ex.Source },
+                });
+                Helpers.LogException(message, EventLogSource);
+
+                if (Environment.UserInteractive)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Error.Write("[ERROR] ");
+                    Console.ResetColor();
+                    Console.Error.WriteLine(ex.Message);
+                    Console.Error.WriteLine("See event log for details.");
+                }
+
+                return;
+            }
+
+            var newScheduleEntryIds = new List<int>();
 
             foreach (var scheduleEntry in scheduleEntries)
             {

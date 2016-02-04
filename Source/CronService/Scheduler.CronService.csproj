@@ -87,6 +87,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Scheduler.Common.csproj">
+      <Project>{ac1e94ca-b8ff-417c-a332-d49f49c6d8b9}</Project>
+      <Name>Scheduler.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataAccess\Scheduler.DataAccess.csproj">
       <Project>{c839f6e8-0a76-4e57-9f24-a3e35ef8799e}</Project>
       <Name>Scheduler.DataAccess</Name>
