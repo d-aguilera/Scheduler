@@ -1,28 +1,14 @@
 ﻿using Scheduler.SchedulerService.Client;
 using Scheduler.ServiceContracts;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Security.Permissions;
-using System.ServiceModel;
-using System.ServiceModel.Description;
 
 namespace Scheduler.AgentService
 {
     public class Agent : IAgent
     {
-        public static void Configure(ServiceConfiguration config)
-        {
-            var binding = new SchedulerBinding();
-            var address = new Uri("cert/Agent.svc", UriKind.Relative);
-            config.AddServiceEndpoint(typeof(IAgent), binding, address);
-            config.Description.Behaviors.Add(new ServiceMetadataBehavior { HttpsGetEnabled = true });
-            config.Description.Behaviors.Add(new ServiceDebugBehavior { IncludeExceptionDetailInFaults = true });
-            config.Description.Behaviors.Add(new ServiceAuthorizationBehavior { PrincipalPermissionMode = PrincipalPermissionMode.UseAspNetRoles });
-        }
-
         [PrincipalPermission(SecurityAction.Demand, Name = PrincipalNames.SchedulerService)]
         public void Execute(int logEntryId, string shellCommand, string workingDirectory)
         {

@@ -10,7 +10,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Security.Permissions;
 using System.ServiceModel;
-using System.ServiceModel.Description;
 using System.ServiceProcess;
 
 namespace Scheduler.SchedulerService
@@ -18,16 +17,6 @@ namespace Scheduler.SchedulerService
     public class Scheduler : IScheduler
     {
         const string EventLogSource = "Scheduler.SchedulerService";
-
-        public static void Configure(ServiceConfiguration config)
-        {
-            var binding = new SchedulerBinding();
-            var address = new Uri("cert/Scheduler.svc", UriKind.Relative);
-            config.AddServiceEndpoint(typeof(IScheduler), binding, address);
-            config.Description.Behaviors.Add(new ServiceMetadataBehavior { HttpsGetEnabled = true });
-            config.Description.Behaviors.Add(new ServiceDebugBehavior { IncludeExceptionDetailInFaults = true });
-            config.Description.Behaviors.Add(new ServiceAuthorizationBehavior { PrincipalPermissionMode = PrincipalPermissionMode.UseAspNetRoles });
-        }
 
         [PrincipalPermission(SecurityAction.Demand, Name = PrincipalNames.CronService)]
         public void ExecuteMany(IEnumerable<int> scheduleEntryIds)
