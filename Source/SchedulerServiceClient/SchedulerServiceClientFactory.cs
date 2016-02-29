@@ -15,9 +15,9 @@ namespace Scheduler.SchedulerService.Client
 
         static EndpointAddress GetEndpointAddress()
         {
-            var uriString = ConfigurationManager.AppSettings["SchedulerServiceAddress"];
+            var uriString = ConfigurationManager.AppSettings["Scheduler.SchedulerService.Url"];
             var uri = new Uri(uriString, UriKind.Absolute);
-            var address = new EndpointAddress(uri);
+            var address = new EndpointAddress(uri, DnsEndpointIdentity.CreateDnsIdentity("localhost"));
             return address;
         }
     }

@@ -8,8 +8,10 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Security.Permissions;
 using System.ServiceModel;
+using System.ServiceModel.Description;
 using System.ServiceProcess;
 
 namespace Scheduler.SchedulerService
@@ -17,6 +19,23 @@ namespace Scheduler.SchedulerService
     public class Scheduler : IScheduler
     {
         const string EventLogSource = "Scheduler.SchedulerService";
+
+        public static void Configure(ServiceConfiguration config)
+        {
+            var baseUrl = ConfigurationManager.AppSettings["Scheduler.Service.BaseUrl"];
+            var contract = ContractDescription.GetContract(typeof(IScheduler));
+            var binding = new SchedulerBinding();
+            var agentUri = new Uri(baseUrl + "/cert/Scheduler.svc");
+            var mexUri = new Uri(baseUrl + "/mex");
+            var address = new EndpointAddress(agentUri, EndpointIdentity.CreateDnsIdentity("localhost"));
+            var endpoint = new ServiceEndpoint(contract, binding, address);
+            var sn = ConfigurationManager.AppSettings["Scheduler.Service.CertificateSerialNumber"];
+            config.AddServiceEndpoint(endpoint);
+            config.Credentials.ServiceCertificate.SetCertificate(StoreLocation.LocalMachine, StoreName.My, X509FindType.FindBySerialNumber, sn);
+            config.Authorization.PrincipalPermissionMode = PrincipalPermissionMode.UseAspNetRoles;
+            config.Description.Behaviors.Add(new ServiceMetadataBehavior { HttpGetEnabled = true, HttpGetUrl = mexUri });
+            config.Description.Behaviors.Add(new ServiceDebugBehavior { IncludeExceptionDetailInFaults = true });
+        }
 
         [PrincipalPermission(SecurityAction.Demand, Name = PrincipalNames.CronService)]
         public void ExecuteMany(IEnumerable<int> scheduleEntryIds)
