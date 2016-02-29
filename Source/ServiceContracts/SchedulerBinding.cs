@@ -9,10 +9,10 @@ namespace Scheduler.ServiceContracts
         {
             Security = new BasicHttpSecurity
             {
-                Mode = BasicHttpSecurityMode.Transport,
-                Transport = new HttpTransportSecurity
+                Mode = BasicHttpSecurityMode.Message,
+                Message =
                 {
-                    ClientCredentialType = HttpClientCredentialType.Certificate
+                    ClientCredentialType = BasicHttpMessageCredentialType.Certificate
                 }
             };
         }

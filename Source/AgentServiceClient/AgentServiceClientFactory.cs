@@ -18,7 +18,7 @@ namespace Scheduler.AgentService.Client
         {
             var uriString = string.Format(
                 CultureInfo.InvariantCulture,
-                "https://{0}{1}{2}/Scheduler/cert/Agent.svc",
+                "http://{0}{1}{2}/Scheduler/cert/Agent.svc",
                 networkName,
                 null == port ? null : (":" + Convert.ToString(port, CultureInfo.InvariantCulture)),
                 string.IsNullOrWhiteSpace(virtualDirectory) ? null : ("/" + virtualDirectory.Trim())
