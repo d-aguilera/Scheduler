@@ -1,6 +1,8 @@
-﻿using Scheduler.SchedulerService.Client;
+﻿using Scheduler.Common;
+using Scheduler.SchedulerService.Client;
 using Scheduler.ServiceContracts;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Security.Permissions;
@@ -9,10 +11,14 @@ namespace Scheduler.AgentService
 {
     public class Agent : SchedulerServiceBase<IAgent>, IAgent
     {
+        const string EventLogSource = "Scheduler.AgentService";
+
         [PrincipalPermission(SecurityAction.Demand, Name = PrincipalNames.SchedulerService)]
         public void Execute(int logEntryId, string shellCommand, string workingDirectory)
         {
             var started = DateTime.UtcNow;
+            var finished = default(DateTime);
+            var exitCode = default(int);
             var processId = default(int?);
             var consoleOut = string.Empty;
             var errorOut = string.Empty;
@@ -39,12 +45,53 @@ namespace Scheduler.AgentService
                     process.BeginOutputReadLine();
                     process.BeginErrorReadLine();
                     process.WaitForExit();
-                    UpdateLogEntry(logEntryId, process.StartTime, process.ExitTime, process.ExitCode, processId, consoleOut, errorOut);
+
+                    started = process.StartTime;
+                    finished = process.ExitTime;
+                    exitCode = process.ExitCode;
+
                 };
             }
-            catch (Win32Exception ex)
+            catch (Exception ex)
             {
-                UpdateLogEntry(logEntryId, started, DateTime.UtcNow, ex.ErrorCode, processId, consoleOut, errorOut + Environment.NewLine + ex.ToString());
+                var message = Helpers.GetFullExceptionMessage(ex, "Could not execute command.", new Dictionary<string, object> {
+                    { "logEntryId", logEntryId },
+                    { "shellCommand", shellCommand },
+                    { "workingDirectory", workingDirectory },
+                });
+                Helpers.LogException(message, EventLogSource);
+
+                var win32ex = ex as Win32Exception;
+                if (null != win32ex)
+                {
+                    finished = DateTime.UtcNow;
+                    exitCode = win32ex.ErrorCode;
+                    errorOut += Environment.NewLine + message;
+                }
+                else
+                    throw;
+            }
+
+            try
+            {
+                UpdateLogEntry(logEntryId, started, finished, exitCode, processId, consoleOut, errorOut);
+            }
+            catch (Exception ex)
+            {
+                var message = Helpers.GetFullExceptionMessage(ex, "Could not update log entry.", new Dictionary<string, object> {
+                    { "logEntryId", logEntryId },
+                    { "shellCommand", shellCommand },
+                    { "workingDirectory", workingDirectory },
+                    { "started", started },
+                    { "finished", finished },
+                    { "exitCode", exitCode },
+                    { "processId", processId },
+                    { "consoleOut", consoleOut },
+                    { "errorOut", errorOut },
+                });
+                Helpers.LogException(message, EventLogSource);
+
+                throw;
             }
         }
 

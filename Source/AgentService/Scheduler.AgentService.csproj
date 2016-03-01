@@ -52,6 +52,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Scheduler.Common.csproj">
+      <Project>{ac1e94ca-b8ff-417c-a332-d49f49c6d8b9}</Project>
+      <Name>Scheduler.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataContracts\Scheduler.DataContracts.csproj">
       <Project>{fd0050ab-4688-4c5a-bb00-472c67d5abab}</Project>
       <Name>Scheduler.DataContracts</Name>
