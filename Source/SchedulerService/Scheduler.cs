@@ -203,6 +203,7 @@ namespace Scheduler.SchedulerService
             }
         }
 
+        [PrincipalPermission(SecurityAction.Demand, Name = PrincipalNames.Web)]
         public void Reload()
         {
             const int CronReload = 201;
