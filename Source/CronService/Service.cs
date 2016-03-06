@@ -188,9 +188,36 @@ namespace Scheduler.CronService
             return new DateTime(from.Year, from.Month, from.Day, from.Hour, from.Minute, 0, 0, DateTimeKind.Utc).AddMinutes(1.0);
         }
 
-        static bool CronPartMatches(string cronPart, int target)
+        static bool CronPartMatches(string part, int target)
         {
-            return cronPart == "*" || int.Parse(cronPart) == target;
+            if (part == "*")
+                return true;
+
+            var separator = new[] { ',' };
+
+            return part.Split(separator, StringSplitOptions.RemoveEmptyEntries)
+                .Any(range => CronRangeMatches(range, target));
+        }
+
+        static bool CronRangeMatches(string range, int target)
+        {
+            var separator = new[] { '-' };
+
+            var values = range.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+
+            if (values.Length > 1)
+            {
+                var min = int.Parse(values[0]);
+                var max = int.Parse(values[1]);
+                return min <= target && target <= max;
+            }
+
+            if (values.Length > 0)
+            {
+                return int.Parse(values[0]) == target;
+            }
+
+            throw new ArgumentOutOfRangeException("range", range, "Unrecognized cron range expression.");
         }
 
         static void ShowError(string message)

@@ -117,7 +117,7 @@ GO
 CREATE TABLE [dbo].[ScheduleEntries](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[ClientId] [int] NOT NULL,
-	[CronExpression] [varchar](50) NOT NULL,
+	[CronExpression] [varchar](500) NOT NULL,
 	[ShellCommand] [nvarchar](max) NOT NULL,
 	[WorkingDirectory] [nvarchar](500) NULL,
 	[Enabled] [bit] NOT NULL,
