@@ -6,6 +6,7 @@
     <title>@ViewBag.Title - Shell Commands Scheduler</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/toastr")
+    @RenderSection("Css", required: false)
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
@@ -40,6 +41,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/toastr")
-    @RenderSection("scripts", required: false)
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

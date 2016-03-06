@@ -26,12 +26,18 @@ namespace Scheduler.Web
             bundles.Add(new ScriptBundle("~/bundles/toastr").Include(
                       "~/Scripts/toastr.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/cron").Include(
+                      "~/Scripts/cron.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/toastr").Include(
                       "~/Content/toastr.css"));
+
+            bundles.Add(new StyleBundle("~/Content/cron").Include(
+                      "~/Content/cron.css"));
         }
     }
 }

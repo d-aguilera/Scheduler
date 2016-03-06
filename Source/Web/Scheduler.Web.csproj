@@ -146,6 +146,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\cron.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="favicon.ico" />
@@ -165,6 +166,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-2.2.0.intellisense.js" />
+    <Content Include="Scripts\cron.js" />
     <Content Include="Scripts\jquery-2.2.0.js" />
     <Content Include="Scripts\jquery-2.2.0.min.js" />
     <Content Include="Scripts\jquery-2.2.0.min.map" />
@@ -213,6 +215,7 @@
     <Content Include="Views\ScheduleEntries\DetailsPartial.cshtml" />
     <Content Include="Views\ScheduleEntries\EditPartial.cshtml" />
     <Content Include="Views\Clients\EditPartial.cshtml" />
+    <Content Include="Views\ScheduleEntries\CronExpressionPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

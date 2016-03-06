@@ -62,6 +62,15 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
+@section Css {
+@Styles.Render("~/Content/cron")
+}
+
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/cron")
+
+<script type="text/javascript">
+    var cronControlHandler = new CronControlHandler();
+</script>
 }
