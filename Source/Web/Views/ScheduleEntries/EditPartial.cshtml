@@ -9,15 +9,18 @@
         </div>
 
         <div class="form-group">
+            <label class="control-label col-md-2">Schedule</label>
+            <!--
             @Html.LabelFor(model => model.CronExpression, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            -->
+            <div>
                 @Html.Partial("CronExpressionPartial", Model.CronExpression)
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.CronExpression, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10" id="CronExpressionDisplay">
+            <div class="form-control" style="display: inline-block; margin-left: 15px; width: inherit;" id="CronExpressionDisplay">
                 @Model.CronExpression
             </div>
         </div>
