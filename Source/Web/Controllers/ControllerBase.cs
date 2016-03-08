@@ -10,13 +10,13 @@ using System.Web.Mvc;
 
 namespace Scheduler.Web.Controllers
 {
-    public abstract class ControllerBase<TEntity> : IndexControllerBase<TEntity> where TEntity : Identifiable
+    public abstract class ControllerBase<TEntity> : IndexControllerBase<TEntity> where TEntity : Identifiable, new()
     {
         // GET: ScheduleEntries/Create
         public virtual ActionResult Create()
         {
             AddSelectListsToViewBag();
-            return View();
+            return View(new TEntity());
         }
 
         // POST: Entities/Create
