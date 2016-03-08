@@ -41,6 +41,8 @@ namespace Scheduler.DataContracts
 
         #endregion
 
+        string _cronExpression = "* * * * *";
+
         [DataMember]
         public int ClientId
         {
@@ -54,8 +56,8 @@ namespace Scheduler.DataContracts
         [Display(Name = "ScheduleEntryCronExpressionName", ShortName = "ScheduleEntryCronExpressionShortName", ResourceType = typeof(Resources))]
         public string CronExpression
         {
-            get;
-            set;
+            get { return _cronExpression; }
+            set { _cronExpression = value; }
         }
 
         [DataMember]
